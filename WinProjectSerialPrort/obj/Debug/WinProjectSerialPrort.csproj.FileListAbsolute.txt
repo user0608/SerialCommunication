@@ -1,0 +1,10 @@
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.csprojAssemblyReference.cache
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.MainForm.resources
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.Properties.Resources.resources
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.csproj.GenerateResource.cache
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.csproj.CoreCompileInputs.cache
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.exe.config
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.exe
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.pdb
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.exe
+C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.pdb
