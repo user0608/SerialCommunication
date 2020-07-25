@@ -11,22 +11,24 @@ using MySerialPortKS;
 
 namespace WinProjectSerialPrort
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form,ReceiveMessageAction 
     {
         private MySerialPort mySerialPort;
         private string portname;
+        
         
         public MainForm()
         {
             InitializeComponent();
             this.txtPortName.SelectedIndex = 0;
+           // this.txtChat.Enabled = false;            
         }
 
                
         private void Connect()
         {
             this.portname = txtPortName.Text;
-            this.mySerialPort = new MySerialPort(portname);
+            this.mySerialPort = new MySerialPort(portname,this);
             try { 
             if (mySerialPort.Connect())
             {             
@@ -83,6 +85,22 @@ namespace WinProjectSerialPrort
             }
         }
 
+        private void addMessageToChat(string message,string title) 
+        {
+            if (message!="")
+            {
+                if (this.txtChat.Text == "")
+                {
+                    this.txtChat.Text= "[" + title + "]\n" + message; 
+                }
+                else
+                {
+                    this.txtChat.Text+= "\n\n[" + title + "]\n" + message; 
+                }            
+            }
+
+        }
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             if (this.txtMessage.Text!="")
@@ -91,8 +109,9 @@ namespace WinProjectSerialPrort
                 {
                     string message = this.mySerialPort.Send(this.txtMessage.Text);
                     lblResponse.Text = message;
+                    this.addMessageToChat(this.txtMessage.Text, "Me");
                     this.lblResponse.ForeColor = Color.Green;
-                    this.txtMessage.Text = "";
+                    this.txtMessage.Text = "";                    
                 }
                 catch (Exception err)
                 {
@@ -109,6 +128,29 @@ namespace WinProjectSerialPrort
             {
                 this.lblResponse.Text = "";
             }
+        }
+     
+
+        private void btnReceive_Click(object sender, EventArgs e)
+        {            
+
+            //string message="";
+            //if (this.mySerialPort.isOpen())
+            //{
+            //    try{
+            //        message = this.mySerialPort.Recieve();
+            //        this.addMessageToChat(message, "Receive");
+            //    }
+            //    catch (Exception err)
+            //    {
+            //        this.lblResponse.Text = err.Message;
+            //        this.lblResponse.ForeColor = Color.Red;
+            //    }
+            //}
+        }
+
+        public void messageReceived(string message){         
+            this.addMessageToChat(message, "Receive");       
         }
     }
 }

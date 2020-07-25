@@ -10,27 +10,33 @@ namespace MySerialPortKS
 
     public class MySerialPort
     {
+        private ReceiveMessageAction receiveMessageAction;
         private SerialPort serialPort;
         private string portName;
-        private Thread sendProcess;
-        private Thread recieveProcess;
+        private Thread sendProcess;        
         private string smsToSend;
+        private string smsToRecieve;
 
+        public delegate void HandlerReceiveMessage(object oo, string message);
+        public event HandlerReceiveMessage messageIsHere;
 
-        public MySerialPort(string portName)
+        public MySerialPort(string portName, ReceiveMessageAction receiveMessageAction)
         {
             this.portName = portName;
+            this.receiveMessageAction = receiveMessageAction;
             
 
         }
 
         public bool Connect()
         {
-
-            
+                        
             try
             {
-            serialPort = new SerialPort(portName, 9600, Parity.Even, 8, StopBits.Two);
+            serialPort = new SerialPort(portName, 57600, Parity.Even, 8, StopBits.Two);
+            serialPort.ReceivedBytesThreshold = 5;
+            serialPort.DataReceived += new SerialDataReceivedEventHandler(receivingData);
+                
             }
             catch
             {
@@ -40,7 +46,6 @@ namespace MySerialPortKS
             {
                 serialPort.Open();
                 return true;
-
             }
             catch
             {
@@ -89,26 +94,13 @@ namespace MySerialPortKS
         {
             return this.serialPort.IsOpen;
         }
-        public string Recieve()
+        private string receive()
         {
-            if (serialPort.IsOpen)
-            {
-                try
-                {
-
-                    string message = this.serialPort.ReadExisting();
-                    return message;
-                }
-                catch
-                {
-                    throw new Exception("Error to read the message");
-                }
-
-            }
-            else
-            {
-                throw new Exception("Is not connected");
-            }
+            return serialPort.ReadExisting();          
+        }
+        private void receivingData(object o,SerialDataReceivedEventArgs args)
+        {
+            receiveMessageAction.messageReceived(this.receive());
         }
     }
 }
