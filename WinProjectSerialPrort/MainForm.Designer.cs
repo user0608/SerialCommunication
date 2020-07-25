@@ -36,7 +36,6 @@
             this.txtPortName = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtChat = new System.Windows.Forms.RichTextBox();
-            this.btnReceive = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSend
@@ -119,22 +118,11 @@
             this.txtChat.TabIndex = 7;
             this.txtChat.Text = "";
             // 
-            // btnReceive
-            // 
-            this.btnReceive.Location = new System.Drawing.Point(317, 308);
-            this.btnReceive.Name = "btnReceive";
-            this.btnReceive.Size = new System.Drawing.Size(75, 23);
-            this.btnReceive.TabIndex = 8;
-            this.btnReceive.Text = "receive";
-            this.btnReceive.UseVisualStyleBackColor = true;
-            this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 343);
-            this.Controls.Add(this.btnReceive);
             this.Controls.Add(this.txtChat);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPortName);
@@ -162,7 +150,6 @@
         private System.Windows.Forms.ComboBox txtPortName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox txtChat;
-        private System.Windows.Forms.Button btnReceive;
     }
 }
 

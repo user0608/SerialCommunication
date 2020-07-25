@@ -11,7 +11,7 @@ using MySerialPortKS;
 
 namespace WinProjectSerialPrort
 {
-    public partial class MainForm : Form,ReceiveMessageAction 
+    public partial class MainForm : Form
     {
         private MySerialPort mySerialPort;
         private string portname;
@@ -21,14 +21,14 @@ namespace WinProjectSerialPrort
         {
             InitializeComponent();
             this.txtPortName.SelectedIndex = 0;
-           // this.txtChat.Enabled = false;            
+                    
         }
-
                
         private void Connect()
         {
             this.portname = txtPortName.Text;
-            this.mySerialPort = new MySerialPort(portname,this);
+            this.mySerialPort = new MySerialPort(portname);
+            this.mySerialPort.messageIsHere += new MySerialPort.HandlerReceiveMessage(this.messageReceived);
             try { 
             if (mySerialPort.Connect())
             {             
@@ -130,26 +130,7 @@ namespace WinProjectSerialPrort
             }
         }
      
-
-        private void btnReceive_Click(object sender, EventArgs e)
-        {            
-
-            //string message="";
-            //if (this.mySerialPort.isOpen())
-            //{
-            //    try{
-            //        message = this.mySerialPort.Recieve();
-            //        this.addMessageToChat(message, "Receive");
-            //    }
-            //    catch (Exception err)
-            //    {
-            //        this.lblResponse.Text = err.Message;
-            //        this.lblResponse.ForeColor = Color.Red;
-            //    }
-            //}
-        }
-
-        public void messageReceived(string message){         
+        private void messageReceived(object oo, string message){         
             this.addMessageToChat(message, "Receive");       
         }
     }
