@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
 namespace WinProjectSerialPrort
 {
     static class Program
@@ -16,7 +18,7 @@ namespace WinProjectSerialPrort
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new MainForm());           
         }
     }
 }

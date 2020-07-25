@@ -8,3 +8,16 @@ C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debu
 C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.CoreCompileInputs.cache
 C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.exe
 C:\Users\User0\source\repos\WinProjectSerialPrort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.pdb
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.exe.config
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.exe
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.pdb
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\bin\Debug\MySerialPortKS.dll
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\bin\Debug\MySerialPortKS.pdb
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csprojAssemblyReference.cache
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.MainForm.resources
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.Properties.Resources.resources
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.GenerateResource.cache
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.CoreCompileInputs.cache
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.CopyComplete
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.exe
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.pdb

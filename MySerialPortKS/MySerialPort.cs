@@ -2,31 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.IO.Ports;
 
 namespace MySerialPortKS
 {
 
-    class MySerialPort
+    public class MySerialPort
     {
         private SerialPort serialPort;
+        private string portName;
+        private Thread sendProcess;
+        private Thread recieveProcess;
+        private string smsToSend;
 
 
         public MySerialPort(string portName)
         {
-            serialPort = new SerialPort(portName, 9600, Parity.Even, 8, StopBits.Two);
+            this.portName = portName;
+            
 
         }
 
         public bool Connect()
         {
 
+            
             try
             {
-
+            serialPort = new SerialPort(portName, 9600, Parity.Even, 8, StopBits.Two);
+            }
+            catch
+            {
+                throw new Exception("Invalid port");
+            }
+            try
+            {
                 serialPort.Open();
                 return true;
+
             }
             catch
             {
@@ -48,23 +62,27 @@ namespace MySerialPortKS
 
         public string Send(string message)
         {
+            this.smsToSend = message;
+            sendProcess = new Thread(sendingMessage);
             if (serialPort.IsOpen)
             {
-                try
-                {
-
-                    this.serialPort.Write(message);
-                    return "Message was sent";
-                }
-                catch
-                {
-                    throw new Exception("Error to write message");
-                }
-
+                this.sendProcess.Start();
+                return "Message was sent";
             }
             else
             {
                 throw new Exception("Is not connected");
+            }
+        }
+        private void sendingMessage()
+        {
+            try
+            {
+                this.serialPort.Write(smsToSend);                
+            }
+            catch
+            {
+                throw new Exception("Error to write message");
             }
         }
         public bool isOpen()

@@ -33,11 +33,13 @@
             this.lblResponse = new System.Windows.Forms.Label();
             this.lblState = new System.Windows.Forms.Label();
             this.btnConnect = new System.Windows.Forms.Button();
+            this.txtPortName = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(154, 156);
+            this.btnSend.Location = new System.Drawing.Point(172, 231);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 0;
@@ -47,16 +49,17 @@
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(80, 54);
+            this.txtMessage.Location = new System.Drawing.Point(12, 62);
+            this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(251, 20);
+            this.txtMessage.Size = new System.Drawing.Size(406, 85);
             this.txtMessage.TabIndex = 1;
             this.txtMessage.Click += new System.EventHandler(this.txtMessage_Click);
             // 
             // lblResponse
             // 
             this.lblResponse.AutoSize = true;
-            this.lblResponse.Location = new System.Drawing.Point(77, 90);
+            this.lblResponse.Location = new System.Drawing.Point(13, 150);
             this.lblResponse.Name = "lblResponse";
             this.lblResponse.Size = new System.Drawing.Size(40, 13);
             this.lblResponse.TabIndex = 2;
@@ -66,7 +69,7 @@
             // 
             this.lblState.AutoSize = true;
             this.lblState.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lblState.Location = new System.Drawing.Point(337, 13);
+            this.lblState.Location = new System.Drawing.Point(329, 9);
             this.lblState.Name = "lblState";
             this.lblState.Size = new System.Drawing.Size(38, 13);
             this.lblState.TabIndex = 3;
@@ -74,7 +77,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(255, 8);
+            this.btnConnect.Location = new System.Drawing.Point(250, 34);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(76, 22);
             this.btnConnect.TabIndex = 4;
@@ -82,11 +85,38 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
+            // txtPortName
+            // 
+            this.txtPortName.FormattingEnabled = true;
+            this.txtPortName.Items.AddRange(new object[] {
+            "COM1",
+            "COM2",
+            "COM3",
+            "COM4",
+            "COM5"});
+            this.txtPortName.Location = new System.Drawing.Point(332, 34);
+            this.txtPortName.Name = "txtPortName";
+            this.txtPortName.Size = new System.Drawing.Size(86, 21);
+            this.txtPortName.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(214, 24);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Serial Communication";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(428, 228);
+            this.ClientSize = new System.Drawing.Size(430, 297);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtPortName);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.lblState);
             this.Controls.Add(this.lblResponse);
@@ -108,6 +138,8 @@
         private System.Windows.Forms.Label lblResponse;
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.ComboBox txtPortName;
+        private System.Windows.Forms.Label label1;
     }
 }
 

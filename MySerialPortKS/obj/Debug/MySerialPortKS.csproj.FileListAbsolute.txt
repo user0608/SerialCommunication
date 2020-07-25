@@ -1,0 +1,6 @@
+C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\bin\Debug\MySerialPortKS.dll
+C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\bin\Debug\MySerialPortKS.pdb
+C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\obj\Debug\MySerialPortKS.csprojAssemblyReference.cache
+C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\obj\Debug\MySerialPortKS.csproj.CoreCompileInputs.cache
+C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\obj\Debug\MySerialPortKS.dll
+C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\obj\Debug\MySerialPortKS.pdb

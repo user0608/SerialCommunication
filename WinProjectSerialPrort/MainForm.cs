@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using MySerialPortKS;
 
 namespace WinProjectSerialPrort
 {
@@ -15,23 +15,27 @@ namespace WinProjectSerialPrort
     {
         private MySerialPort mySerialPort;
         private string portname;
+        
         public MainForm()
         {
             InitializeComponent();
-            this.portname = "COM1";
-            this.mySerialPort = new MySerialPort(portname);
+            this.txtPortName.SelectedIndex = 0;
         }
 
+               
         private void Connect()
         {
-
+            this.portname = txtPortName.Text;
+            this.mySerialPort = new MySerialPort(portname);
+            try { 
             if (mySerialPort.Connect())
             {             
                 this.lblState.Text = "OnLine "+portname;
                 this.lblState.ForeColor = Color.Green;
                 this.btnConnect.Text = "Disconnect";
                 this.txtMessage.Enabled = true;
-                this.lblResponse.Text = "";                
+                this.lblResponse.Text = "";
+                this.txtPortName.Enabled = false;
             }else            
             {
                 this.lblState.Text = "OfLine";
@@ -39,6 +43,12 @@ namespace WinProjectSerialPrort
                 this.btnConnect.Text = "Reconnect";
                 MessageBox.Show(this, "Connect error");
             }
+            }catch(Exception err)
+            {
+                this.lblState.Text = err.Message;
+                this.lblState.ForeColor = Color.Red;
+            }
+
         }
         private void Disconnect()
         {
@@ -47,6 +57,7 @@ namespace WinProjectSerialPrort
                 this.lblState.Text = "OfLine";
                 this.lblState.ForeColor = Color.Red;
                 this.btnConnect.Text = "Connect";
+                this.txtPortName.Enabled = true;
             }
             else
             {
@@ -62,7 +73,7 @@ namespace WinProjectSerialPrort
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (this.lblState.Text == "OnLine COM1")
+            if (this.lblState.Text == "OnLine "+txtPortName.Text)
             {
                 this.Disconnect();
             }
@@ -74,17 +85,20 @@ namespace WinProjectSerialPrort
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            try
+            if (this.txtMessage.Text!="")
             {
-            string message = this.mySerialPort.Send(this.txtMessage.Text);
-                lblResponse.Text = message;                
-                this.lblResponse.ForeColor = Color.Green;
-                this.txtMessage.Text = "";
-            }
-            catch(Exception err)
-            {
-                lblResponse.Text = err.Message;
-                this.lblResponse.ForeColor = Color.Red;
+                try
+                {
+                    string message = this.mySerialPort.Send(this.txtMessage.Text);
+                    lblResponse.Text = message;
+                    this.lblResponse.ForeColor = Color.Green;
+                    this.txtMessage.Text = "";
+                }
+                catch (Exception err)
+                {
+                    lblResponse.Text = err.Message;
+                    this.lblResponse.ForeColor = Color.Red;
+                }
             }
 
         }
