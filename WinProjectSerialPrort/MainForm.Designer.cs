@@ -36,11 +36,14 @@
             this.txtPortName = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtChat = new System.Windows.Forms.RichTextBox();
+            this.txtRatioBaudios = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(411, 319);
+            this.btnSend.Location = new System.Drawing.Point(394, 319);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 0;
@@ -77,7 +80,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(317, 35);
+            this.btnConnect.Location = new System.Drawing.Point(228, 44);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(76, 22);
             this.btnConnect.TabIndex = 4;
@@ -98,7 +101,7 @@
             "COM7",
             "COM9",
             "COM9"});
-            this.txtPortName.Location = new System.Drawing.Point(399, 35);
+            this.txtPortName.Location = new System.Drawing.Point(310, 44);
             this.txtPortName.Name = "txtPortName";
             this.txtPortName.Size = new System.Drawing.Size(86, 21);
             this.txtPortName.TabIndex = 5;
@@ -122,11 +125,40 @@
             this.txtChat.TabIndex = 7;
             this.txtChat.Text = "";
             // 
+            // txtRatioBaudios
+            // 
+            this.txtRatioBaudios.Location = new System.Drawing.Point(402, 44);
+            this.txtRatioBaudios.Name = "txtRatioBaudios";
+            this.txtRatioBaudios.Size = new System.Drawing.Size(84, 20);
+            this.txtRatioBaudios.TabIndex = 8;
+            this.txtRatioBaudios.Text = "57600";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(309, 28);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Port";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(402, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Ratio";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(498, 353);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtRatioBaudios);
             this.Controls.Add(this.txtChat);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPortName);
@@ -154,6 +186,9 @@
         private System.Windows.Forms.ComboBox txtPortName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox txtChat;
+        private System.Windows.Forms.TextBox txtRatioBaudios;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 

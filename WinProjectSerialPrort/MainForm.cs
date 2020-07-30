@@ -23,11 +23,24 @@ namespace WinProjectSerialPrort
             this.txtPortName.SelectedIndex = 0;
                     
         }
+
+        private int getRatio()
+        {
+            try
+            {
+                return (int)Int32.Parse(this.txtRatioBaudios.Text);
+            }catch(Exception e)
+            {
+                MessageBox.Show("Ratio baudios invalid");
+                return 57600;
+                this.txtRatioBaudios.Text = "57600";
+            }
+        }
                
         private void Connect()
         {
-            this.portname = txtPortName.Text;                       
-            this.mySerialPort = new MySerialPort(this.portname);
+            this.portname = txtPortName.Text;                
+            this.mySerialPort = new MySerialPort(this.portname, getRatio());
             this.mySerialPort.messageIsHere += new MySerialPort.HandlerReceiveMessage(this.messageReceived);
             try { 
             if (mySerialPort.Connect())
