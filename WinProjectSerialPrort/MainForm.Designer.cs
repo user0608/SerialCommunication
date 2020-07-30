@@ -36,7 +36,6 @@
             this.txtPortName = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtChat = new System.Windows.Forms.RichTextBox();
-            this.myProgressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // btnSend
@@ -123,21 +122,11 @@
             this.txtChat.TabIndex = 7;
             this.txtChat.Text = "";
             // 
-            // myProgressBar
-            // 
-            this.myProgressBar.Location = new System.Drawing.Point(12, 62);
-            this.myProgressBar.Name = "myProgressBar";
-            this.myProgressBar.Size = new System.Drawing.Size(474, 10);
-            this.myProgressBar.Step = 1;
-            this.myProgressBar.TabIndex = 8;
-            this.myProgressBar.Value = 14;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(498, 353);
-            this.Controls.Add(this.myProgressBar);
             this.Controls.Add(this.txtChat);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPortName);
@@ -165,7 +154,6 @@
         private System.Windows.Forms.ComboBox txtPortName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox txtChat;
-        private System.Windows.Forms.ProgressBar myProgressBar;
     }
 }
 
