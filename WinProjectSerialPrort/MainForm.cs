@@ -15,7 +15,7 @@ namespace WinProjectSerialPrort
     {
         private MySerialPort mySerialPort;
         private string portname;
-        
+        private int speedBaudios;
         
         public MainForm()
         {
@@ -26,8 +26,8 @@ namespace WinProjectSerialPrort
                
         private void Connect()
         {
-            this.portname = txtPortName.Text;
-            this.mySerialPort = new MySerialPort(portname);
+            this.portname = txtPortName.Text;                       
+            this.mySerialPort = new MySerialPort(this.portname);
             this.mySerialPort.messageIsHere += new MySerialPort.HandlerReceiveMessage(this.messageReceived);
             try { 
             if (mySerialPort.Connect())
@@ -69,6 +69,7 @@ namespace WinProjectSerialPrort
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+           
             this.lblResponse.Text = "";
             this.txtMessage.Enabled = false;
         }
@@ -131,7 +132,7 @@ namespace WinProjectSerialPrort
         }
      
         private void messageReceived(object oo, string message){         
-            this.addMessageToChat(message, "Receive");       
+            this.addMessageToChat(message, "Received");       
         }
     }
 }

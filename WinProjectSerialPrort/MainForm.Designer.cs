@@ -36,11 +36,12 @@
             this.txtPortName = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtChat = new System.Windows.Forms.RichTextBox();
+            this.myProgressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(411, 308);
+            this.btnSend.Location = new System.Drawing.Point(411, 319);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(12, 276);
+            this.txtMessage.Location = new System.Drawing.Point(12, 288);
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(475, 20);
             this.txtMessage.TabIndex = 1;
@@ -59,7 +60,7 @@
             // lblResponse
             // 
             this.lblResponse.AutoSize = true;
-            this.lblResponse.Location = new System.Drawing.Point(13, 313);
+            this.lblResponse.Location = new System.Drawing.Point(12, 327);
             this.lblResponse.Name = "lblResponse";
             this.lblResponse.Size = new System.Drawing.Size(40, 13);
             this.lblResponse.TabIndex = 2;
@@ -77,7 +78,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(317, 34);
+            this.btnConnect.Location = new System.Drawing.Point(317, 35);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(76, 22);
             this.btnConnect.TabIndex = 4;
@@ -93,8 +94,12 @@
             "COM2",
             "COM3",
             "COM4",
-            "COM5"});
-            this.txtPortName.Location = new System.Drawing.Point(399, 34);
+            "COM5",
+            "COM6",
+            "COM7",
+            "COM9",
+            "COM9"});
+            this.txtPortName.Location = new System.Drawing.Point(399, 35);
             this.txtPortName.Name = "txtPortName";
             this.txtPortName.Size = new System.Drawing.Size(86, 21);
             this.txtPortName.TabIndex = 5;
@@ -112,17 +117,27 @@
             // 
             // txtChat
             // 
-            this.txtChat.Location = new System.Drawing.Point(12, 60);
+            this.txtChat.Location = new System.Drawing.Point(12, 72);
             this.txtChat.Name = "txtChat";
             this.txtChat.Size = new System.Drawing.Size(474, 216);
             this.txtChat.TabIndex = 7;
             this.txtChat.Text = "";
             // 
+            // myProgressBar
+            // 
+            this.myProgressBar.Location = new System.Drawing.Point(12, 62);
+            this.myProgressBar.Name = "myProgressBar";
+            this.myProgressBar.Size = new System.Drawing.Size(474, 10);
+            this.myProgressBar.Step = 1;
+            this.myProgressBar.TabIndex = 8;
+            this.myProgressBar.Value = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 343);
+            this.ClientSize = new System.Drawing.Size(498, 353);
+            this.Controls.Add(this.myProgressBar);
             this.Controls.Add(this.txtChat);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPortName);
@@ -150,6 +165,7 @@
         private System.Windows.Forms.ComboBox txtPortName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox txtChat;
+        private System.Windows.Forms.ProgressBar myProgressBar;
     }
 }
 
