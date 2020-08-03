@@ -82,9 +82,8 @@ namespace WinProjectSerialPrort
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-           
             this.lblResponse.Text = "";
-            this.txtMessage.Enabled = false;
+            this.txtMessage.Enabled = false;            
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -141,11 +140,18 @@ namespace WinProjectSerialPrort
             if (this.mySerialPort.isOpen())
             {
                 this.lblResponse.Text = "";
-            }
+            }           
+
         }
      
         private void messageReceived(object oo, string message){         
-            this.addMessageToChat(message, "Received");       
+            this.addMessageToChat(message, "Received");
+            MessageBox.Show("");
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            this.txtChat.Text += "\n->>";                
         }
     }
 }

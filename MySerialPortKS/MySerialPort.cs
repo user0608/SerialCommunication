@@ -112,8 +112,6 @@ namespace MySerialPortKS
             }            
         }
 
-
-
         //Procedimiento de envio de las tramas
         public string Send(string message)
         {
