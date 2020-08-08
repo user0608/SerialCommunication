@@ -16,12 +16,20 @@ namespace WinProjectSerialPrort
         private MySerialPort mySerialPort;
         private string portname;
         private int speedBaudios;
-        
+        private ChatPanel myChatPanel;
+
+        public delegate void HandlerReceivedMessage(string message);
+        HandlerReceivedMessage loadMessageReived;
+
         public MainForm()
         {
             InitializeComponent();
+            this.loadMessageReived = new HandlerReceivedMessage(loadMessage);
             this.txtPortName.SelectedIndex = 0;
-                    
+            this.myChatPanel = new ChatPanel(this.contentChatPanelMain.Width, this.contentChatPanelMain.Height, 0, 0);
+            this.contentChatPanelMain.Controls.Clear();
+            this.contentChatPanelMain.Controls.Add(this.myChatPanel);
+            this.myChatPanel.changeheightPanel += new ChatPanel.ChangeheightPanel(updateScroll);
         }
 
         private int getRatio()
@@ -83,6 +91,11 @@ namespace WinProjectSerialPrort
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.lblResponse.Text = "";
+            contentChatPanelMain.AutoScroll = false;
+            contentChatPanelMain.HorizontalScroll.Enabled = false;
+            contentChatPanelMain.HorizontalScroll.Visible = false;
+            contentChatPanelMain.HorizontalScroll.Maximum = 0;
+            contentChatPanelMain.AutoScroll = true;            
             this.txtMessage.Enabled = false;            
         }
 
@@ -98,22 +111,6 @@ namespace WinProjectSerialPrort
             }
         }
 
-        private void addMessageToChat(string message,string title) 
-        {
-            if (message!="")
-            {
-                if (this.txtChat.Text == "")
-                {
-                    this.txtChat.Text= "[" + title + "]\n" + message; 
-                }
-                else
-                {
-                    this.txtChat.Text+= "\n\n[" + title + "]\n" + message; 
-                }            
-            }
-
-        }
-
         private void btnSend_Click(object sender, EventArgs e)
         {
             if (this.txtMessage.Text!="")
@@ -121,8 +118,8 @@ namespace WinProjectSerialPrort
                 try
                 {
                     string message = this.mySerialPort.Send(this.txtMessage.Text);
-                    lblResponse.Text = message;
-                    this.addMessageToChat(this.txtMessage.Text, "Me");
+                    lblResponse.Text = message;               
+                    this.myChatPanel.addNewMessage(this.txtMessage.Text,"Me",false);
                     this.lblResponse.ForeColor = Color.Green;
                     this.txtMessage.Text = "";                    
                 }
@@ -144,14 +141,20 @@ namespace WinProjectSerialPrort
 
         }
      
-        private void messageReceived(object oo, string message){         
-            this.addMessageToChat(message, "Received");
-            MessageBox.Show("");
+        private void messageReceived(object oo, string message){
+            //this.addMessageToChat(message, "Received");
+            this.Invoke(this.loadMessageReived, message);         
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        private void loadMessage(string message)
         {
-            this.txtChat.Text += "\n->>";                
+            this.myChatPanel.addNewMessage(message, "Received", true);
+
         }
+        private void updateScroll()
+        {
+            this.contentChatPanelMain.VerticalScroll.Value = 
+                this.contentChatPanelMain.VerticalScroll.Maximum;
+        }
+              
     }
 }
