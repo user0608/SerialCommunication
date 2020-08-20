@@ -7,9 +7,9 @@ namespace MySerialPortKS
     //Clase encargada de definir la comunicacion serial, recibir y enviar tramas.
     public class MySerialPort
     {
-        const byte TYPE_MESSAGE = 109;
-        const byte TYPE_FILE =102;
-        const byte TYPE_PHOTO = 112;
+        //const byte TYPE_MESSAGE = 109;
+        //const byte TYPE_FILE =102;
+        //const byte TYPE_PHOTO = 112;
 
 
         private const int TRAMA_SIZE_HEAD = 6;
@@ -22,21 +22,22 @@ namespace MySerialPortKS
         private Thread sendProcess;
         private Thread receiveMessage;
         private string smsToRecieve;
-        private byte[] myTrama;
+        //private byte[] myTrama;
+        private Trama myTrama;
 
         public delegate void HandlerReceiveMessage(object oo, string message);
         public event HandlerReceiveMessage messageIsHere;
 
         public MySerialPort(string portName)
         {
-            this.portName = portName;            
-            this.myTrama = new byte[TRAMA_SIZE];          
+            this.portName = portName;
+            this.myTrama = new Trama();       
         }
         public MySerialPort(string portName,int speedBaudios):this(portName)
         {
             this.speedBaudios = speedBaudios;
+            
         }
-
 
         public bool Connect(){
             try{
@@ -86,38 +87,10 @@ namespace MySerialPortKS
             }
         }     
 
-
-        //Codifica la longitud del mensaje en la cabecera de la trama head
-        private void setTramaHead(byte[] message,byte tipo){
-            //byte[] lengthMessage = ASCIIEncoding.UTF8.GetBytes((message.Length).ToString());
-            byte[] lengthMessage = ASCIIEncoding.UTF8.GetBytes((message.Length).ToString());
-            int length = message.Length.ToString().Length;            
-            for (int i = 0; i < TRAMA_SIZE_HEAD; i++) this.myTrama[i] = 48;
-            this.myTrama[0] = tipo;
-            int index = 0;            
-            for (int i = TRAMA_SIZE_HEAD - length; i < TRAMA_SIZE_HEAD; i++)
-            {
-                this.myTrama[i] = lengthMessage[index];
-                index++;
-            }
-        }
-
-        //Codifica el mensaje en la trama body.
-        private void setTramaBody(byte[] message){            
-            int lengthMessage = message.Length;
-            if (lengthMessage > (TRAMA_SIZE - TRAMA_SIZE_HEAD)) lengthMessage = TRAMA_SIZE - TRAMA_SIZE_HEAD;                     
-            for (int i=TRAMA_SIZE_HEAD;i< lengthMessage + TRAMA_SIZE_HEAD; i++)
-            {
-                this.myTrama[i] = message[i-TRAMA_SIZE_HEAD];
-            }            
-        }
-
         //Procedimiento de envio de las tramas
         public string Send(string message)
         {
-            byte[] bytesMessage = ASCIIEncoding.UTF8.GetBytes(message);  
-            this.setTramaHead(bytesMessage, TYPE_MESSAGE);
-            this.setTramaBody(bytesMessage);
+            this.myTrama.SetTrama(message);
 
             this.sendProcess = new Thread(sendingMessage);
             if (serialPort.IsOpen){
@@ -157,21 +130,11 @@ namespace MySerialPortKS
         {
             byte[] receivedMessage=new byte[TRAMA_SIZE];
             this.serialPort.Read(receivedMessage, 0, TRAMA_SIZE);
-            switch (receivedMessage[0])
-            {
-                case TYPE_MESSAGE:
-                    this.smsToRecieve = ASCIIEncoding.UTF8.GetString(receivedMessage, 0, TRAMA_SIZE);
+            if (receivedMessage[0] == Trama.TYPE_MESSAGE){
+                    this.smsToRecieve = ASCIIEncoding.UTF8.GetString(receivedMessage, 0, TRAMA_SIZE);                   
                     this.receiveMessage = new Thread(receivingMessage);
                     this.receiveMessage.Start();
-                    break;
-                case TYPE_FILE:
-                    break;
-                case TYPE_PHOTO:
-                    break;
-                default:
-                    break;
             }
-           
         }
         private void receivingMessage()
         {
@@ -181,12 +144,14 @@ namespace MySerialPortKS
         {
             try
             {              
-                this.serialPort.Write(this.myTrama,0,TRAMA_SIZE);                
+                this.serialPort.Write(this.myTrama.GetTrama(),0,TRAMA_SIZE);                
             }
             catch
             {
                 throw new Exception("Error to write message");
             }
+            
         }
+       
     }
 }
