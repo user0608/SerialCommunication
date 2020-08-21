@@ -49,7 +49,7 @@
             this.btnSend.FlatAppearance.BorderSize = 0;
             this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(491, 327);
+            this.btnSend.Location = new System.Drawing.Point(491, 344);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(89, 30);
             this.btnSend.TabIndex = 0;
@@ -59,16 +59,20 @@
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(40, 333);
+            this.txtMessage.Location = new System.Drawing.Point(40, 347);
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(440, 20);
             this.txtMessage.TabIndex = 1;
-            this.txtMessage.Click += new System.EventHandler(this.txtMessage_Click);
+            this.txtMessage.TextChanged += new System.EventHandler(this.txtMessage_TextChanged);
+            this.txtMessage.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtMessage_DragDrop);
+            this.txtMessage.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtMessage_DragEnter);
+            this.txtMessage.DragOver += new System.Windows.Forms.DragEventHandler(this.txtMessage_DragOver);
+            this.txtMessage.DragLeave += new System.EventHandler(this.txtMessage_DragLeave);
             // 
             // lblResponse
             // 
             this.lblResponse.AutoSize = true;
-            this.lblResponse.Location = new System.Drawing.Point(37, 360);
+            this.lblResponse.Location = new System.Drawing.Point(37, 331);
             this.lblResponse.Name = "lblResponse";
             this.lblResponse.Size = new System.Drawing.Size(40, 13);
             this.lblResponse.TabIndex = 2;
@@ -164,7 +168,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(604, 391);
+            this.ClientSize = new System.Drawing.Size(611, 435);
             this.Controls.Add(this.contentChatPanelMain);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -178,6 +182,7 @@
             this.Controls.Add(this.btnSend);
             this.Name = "MainForm";
             this.Text = "WinChat";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

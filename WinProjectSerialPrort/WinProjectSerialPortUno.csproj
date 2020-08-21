@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatPanel.cs">
+    <Compile Include="Components\ChatPanel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\KMessageBox.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

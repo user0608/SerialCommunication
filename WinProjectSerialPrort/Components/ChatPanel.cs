@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinProjectSerialPrort
+namespace MyComponets
 {
     public class ChatPanel:Panel
     {

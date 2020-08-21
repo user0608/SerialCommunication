@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySerialPortKS;
+using MyComponets;
 
 namespace WinProjectSerialPrort
 {
@@ -18,18 +19,23 @@ namespace WinProjectSerialPrort
         private int speedBaudios;
         private ChatPanel myChatPanel;
 
+        private List<String> listPathFiles;
+
         public delegate void HandlerReceivedMessage(string message);
         HandlerReceivedMessage loadMessageReived;
 
         public MainForm()
         {
             InitializeComponent();
+            this.listPathFiles = new List<string>();
             this.loadMessageReived = new HandlerReceivedMessage(loadMessage);
             this.txtPortName.SelectedIndex = 0;
             this.myChatPanel = new ChatPanel(this.contentChatPanelMain.Width, this.contentChatPanelMain.Height, 0, 0);
             this.contentChatPanelMain.Controls.Clear();
             this.contentChatPanelMain.Controls.Add(this.myChatPanel);
             this.myChatPanel.changeheightPanel += new ChatPanel.ChangeheightPanel(updateScroll);
+
+            
         }
 
         private int getRatio()
@@ -40,8 +46,8 @@ namespace WinProjectSerialPrort
             }catch(Exception e)
             {
                 MessageBox.Show("Ratio baudios invalid");
-                return 57600;
                 this.txtRatioBaudios.Text = "57600";
+                return 57600;
             }
         }
                
@@ -96,7 +102,11 @@ namespace WinProjectSerialPrort
             contentChatPanelMain.HorizontalScroll.Visible = false;
             contentChatPanelMain.HorizontalScroll.Maximum = 0;
             contentChatPanelMain.AutoScroll = true;            
-            this.txtMessage.Enabled = false;            
+            this.txtMessage.Enabled = false;
+
+            this.AllowDrop = true;
+            this.txtMessage.AllowDrop = true;
+            
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -147,7 +157,7 @@ namespace WinProjectSerialPrort
         }
         private void loadMessage(string message)
         {
-            this.myChatPanel.addNewMessage(message, "Received", true);
+            this.myChatPanel.addNewMessage(message, "Received", true);            
 
         }
         private void updateScroll()
@@ -155,6 +165,96 @@ namespace WinProjectSerialPrort
             this.contentChatPanelMain.VerticalScroll.Value = 
                 this.contentChatPanelMain.VerticalScroll.Maximum;
         }
-              
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            KMessageBox.show(this.Location,"Hola a todos como estan este es un pp","mi title");
+        }
+
+        private void txtMessage_DragDrop(object sender, DragEventArgs e)
+        {
+            this.txtMessage.ForeColor = Color.BlueViolet;
+            string[] filesList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach(string path in filesList)
+            {
+                this.listPathFiles.Add(path);
+            }
+            this.txtMessage.Clear();
+            foreach (string path in listPathFiles)
+            {
+                this.txtMessage.Text += string.Format(path + "{0}", Environment.NewLine);
+            }
+        }
+
+        
+        private void changeModeMessageBox(bool file)
+        {
+            if (this.listPathFiles.Count==0)
+            {
+                if (file)
+                {
+                    this.txtMessage.BackColor = Color.WhiteSmoke;
+                    this.txtMessage.ForeColor = Color.Green;
+                    this.txtMessage.Multiline = true;
+                    this.txtMessage.Height = 60;
+                    this.txtMessage.Text = string.Format("{0}                                                   Drop file...    {0}", Environment.NewLine);
+                   
+
+                }
+                else
+                {
+                    this.txtMessage.BackColor = Color.White;
+                    this.txtMessage.ForeColor = Color.Black;
+                    this.txtMessage.Multiline = false;
+                    this.txtMessage.Clear();
+                }
+            }
+            else
+            {
+                if (file)
+                {
+                    this.txtMessage.BackColor = Color.WhiteSmoke;               
+
+                }
+                else
+                {
+                    this.txtMessage.BackColor = Color.White;                 
+                }
+                this.txtMessage.ForeColor = Color.BlueViolet;
+            }   
+        }
+
+        private void txtMessage_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+
+        }
+
+        private void txtMessage_DragLeave(object sender, EventArgs e)
+        {
+            this.changeModeMessageBox(false);
+        }
+
+        private void txtMessage_DragOver(object sender, DragEventArgs e)
+        {
+            this.changeModeMessageBox(true);
+
+        }
+        private void txtMessage_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if(this.mySerialPort!=null)this.mySerialPort.Disconnect();
+        }
     }
 }
