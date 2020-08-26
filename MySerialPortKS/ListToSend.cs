@@ -23,7 +23,6 @@ namespace MySerialPortKS
         private List<Resource> processingResource;
         private Thread processesSend;
        
-
         public ListToSend(){
             this.storeResource = new List<Resource>();
             this.processingResource = new List<Resource>();
@@ -49,7 +48,7 @@ namespace MySerialPortKS
             while (processState)
             {
                 if (storeResource.Count != 0)
-                {                    
+                {
                     if (storeResource.Count != 0)
                     {
                         this.processingResource.Add(storeResource[0]);
@@ -58,29 +57,23 @@ namespace MySerialPortKS
                 }
 
                 if (processingResource.Count != 0)
-                {                    
-                                        
-                    foreach(Resource rec in processingResource)
+                {
+
+                    foreach (Resource rec in processingResource)
                     {
-                       
-                Monitor.Enter(locker);
+                                               
                         byte[] trama = rec.getTrama();
-
-                        //while (!bufferIsEmpty) { }
-
-                        if(this.frameToSend!=null) this.frameToSend(trama);
-                Monitor.Exit(locker);
-                        if(this.statusOfSendFile!=null) this.statusOfSendFile(rec);
-                        Thread.Sleep(2);
+                        if (this.frameToSend != null) this.frameToSend(trama);                        
+                        if (this.statusOfSendFile != null) this.statusOfSendFile(rec);
+                        Thread.Sleep(3);
                         if (rec.isCompleted())
                         {
                             this.processingResource.Remove(rec);
                             break;
                         }
-
-                    }                  
+                    }
                 }
-
+                else Thread.Sleep(100);
             }
         }
         public void setStateBuffer(bool state) {

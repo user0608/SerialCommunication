@@ -158,6 +158,7 @@ namespace WinProjectSerialPrort
         private void loadMessage(string message)
         {
             this.myChatPanel.addNewMessage(message, "Received", true);            
+            //this.ppppp.Text = message;
 
         }
         private void updateScroll()
@@ -255,6 +256,11 @@ namespace WinProjectSerialPrort
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if(this.mySerialPort!=null)this.mySerialPort.Disconnect();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            //this.lblResponse.Text=this.mySerialPort.getBytesToRead().ToString();
         }
     }
 }

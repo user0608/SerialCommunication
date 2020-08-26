@@ -5,7 +5,7 @@ using System.IO.Ports;
 using System.Threading.Tasks;
 
 namespace MySerialPortKS
-{
+{    
     //Clase encargada de definir la comunicacion serial, recibir y enviar tramas.
     public class MySerialPort
     {    
@@ -14,11 +14,10 @@ namespace MySerialPortKS
         private SerialPort serialPort;
         private int speedBaudios;
         private string portName;    
-
-        private Thread sendProcess;
-        private Thread receiveMessage;
+                
+        private Thread receiveMessageThread;
+        private bool statusThreadReceiveMessage;
         private string smsToRecieve;     
-        private Trama myTrama;
 
         public delegate void HandlerReceiveMessage(object oo, string message);
         public event HandlerReceiveMessage messageIsHere;
@@ -49,9 +48,12 @@ namespace MySerialPortKS
         public bool Connect(){
             try{
                 serialPort = new SerialPort(portName, this.speedBaudios, Parity.Even, 8, StopBits.Two);
-                serialPort.ReceivedBytesThreshold = Trama.getFrameLength();
-                serialPort.DataReceived += new SerialDataReceivedEventHandler(receivingData);
-            }catch{
+
+                //  serialPort.ReceivedBytesThreshold = Trama.getFrameLength();
+                //  serialPort.DataReceived += new SerialDataReceivedEventHandler(receivingData);                
+             
+            }
+            catch{
                 throw new Exception("Invalid port");
             }
             try{
@@ -60,16 +62,21 @@ namespace MySerialPortKS
                 this.processeThreadBuffer = true;
                 this.theBufferIsReady = new Thread(isBufferReady);
                 this.theBufferIsReady.Start();
+                this.statusThreadReceiveMessage = true;
+                this.receiveMessageThread = new Thread(this.receivingData);
+                this.receiveMessageThread.Start();
                 return true;
             }catch{
                 return false;
             }
         }        
+       
         public bool Disconnect()
         {
             try{
                 this.processeThreadBuffer = false;
-                this.myListToSend.Close();
+                this.statusThreadReceiveMessage = false;
+                this.myListToSend.Close();                
                 serialPort.Close();
                 return true;
             }catch{
@@ -103,12 +110,13 @@ namespace MySerialPortKS
 
         //Procedimiento de envio de las tramas
         public string Send(string message)
-        {           
-           Resource rec = new Resource(false);
-           rec.setMessage(message);
-           this.myListToSend.addStoreResource(rec);
+        {
+            int i = 0;          
+                Resource rec = new Resource(false);
+                rec.setMessage(message +" "+ i.ToString());
+                this.myListToSend.addStoreResource(rec);            
            
-            return "Message was sent";
+            return "Message was sent " + i.ToString();
         }
 
         //Ejecucion de enviado de tramas en un hilo. 
@@ -125,36 +133,41 @@ namespace MySerialPortKS
     
        
         //Se ejecuta cuando el evento DataReceived se desencadena. 
-        private void receivingData(object o,SerialDataReceivedEventArgs args)
+        private  void receivingData()
         {
-            byte[] receivedMessage=new byte[Trama.getFrameLength()];
-            this.serialPort.Read(receivedMessage, 0, Trama.getFrameLength());
-            if (receivedMessage[0] == Trama.TYPE_MESSAGE){
-                    this.smsToRecieve = ASCIIEncoding.UTF8.GetString(receivedMessage, 0, Trama.getFrameLength());                   
-                    this.receiveMessage = new Thread(receivingMessage);
-                    this.receiveMessage.Start();
+            while (this.statusThreadReceiveMessage){
+                Monitor.Enter(serialPort);
+                if (serialPort.BytesToRead != 0)
+                {
+                    byte[] receivedMessage = new byte[Trama.getFrameLength()];
+                    this.serialPort.Read(receivedMessage, 0, Trama.getFrameLength());
+
+                    if (receivedMessage[0] == Trama.TYPE_MESSAGE)
+                    {
+                        this.smsToRecieve = ASCIIEncoding.UTF8.GetString(receivedMessage, 0, Trama.getFrameLength());
+                        this.onMessageIsHere();
+                    }
+                }
+                else Thread.Sleep(100);
+                Monitor.Exit(serialPort);
             }
+           
         }
 
-        private async void frameReadyToSend(byte[] frame)
+        private  void frameReadyToSend(byte[] frame)
         {
             try
             {
-                await Task.Run(() => {
+                    Monitor.Enter(serialPort);
                     while (!this.bufferStatus) { }
                     serialPort.Write(frame, 0, Trama.getFrameLength());
-                });
+                    Monitor.Exit(serialPort);               
             }
             catch
             {
                 throw new Exception("Error to write message");
             }
-
-           // await Task.Delay(1);            
-        }
-        private void receivingMessage()
-        {
-            this.onMessageIsHere();
+         
         }
        
     }
