@@ -42,8 +42,7 @@ namespace MyComponets
             this.Location = new Point(x, y);
             this.BorderStyle= System.Windows.Forms.BorderStyle.Fixed3D;
             this.position_y = 9;
-            this.position_x = 10;
-            
+            this.position_x = 10;           
         }
         private Size calcSizeBoxMensaje(string mensaje)
         {            

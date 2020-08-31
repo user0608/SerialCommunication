@@ -7,9 +7,9 @@ using System.Threading;
 
 namespace MySerialPortKS
 {
-    class ListToSend
+    class SentFileController
     {
-        public static object locker = new Object();
+       
         private int indexCounter;
         private bool processState;
         public delegate void EncodedTrame(byte[] frame);
@@ -23,7 +23,7 @@ namespace MySerialPortKS
         private List<Resource> processingResource;
         private Thread processesSend;
        
-        public ListToSend(){
+        public SentFileController(){
             this.storeResource = new List<Resource>();
             this.processingResource = new List<Resource>();
             this.bufferIsEmpty = true;
@@ -55,7 +55,6 @@ namespace MySerialPortKS
                         this.storeResource.RemoveAt(0);
                     }
                 }
-
                 if (processingResource.Count != 0)
                 {
 
@@ -67,7 +66,7 @@ namespace MySerialPortKS
                         if (this.statusOfSendFile != null) this.statusOfSendFile(rec);
                         Thread.Sleep(3);
                         if (rec.isCompleted())
-                        {
+                        {                            
                             this.processingResource.Remove(rec);
                             break;
                         }

@@ -41,11 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KFile.cs" />
+    <Compile Include="ReceiveFileController.cs" />
     <Compile Include="Resource.cs" />
-    <Compile Include="ListToSend.cs" />
+    <Compile Include="SentFileController.cs" />
     <Compile Include="MySerialPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trama.cs" />
+    <Compile Include="Frame.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

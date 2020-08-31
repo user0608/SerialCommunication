@@ -28,7 +28,7 @@ namespace WinProjectSerialPrort
         {
             InitializeComponent();
             this.listPathFiles = new List<string>();
-            this.loadMessageReived = new HandlerReceivedMessage(loadMessage);
+            this.loadMessageReived = new HandlerReceivedMessage(loadMessage);            
             this.txtPortName.SelectedIndex = 0;
             this.myChatPanel = new ChatPanel(this.contentChatPanelMain.Width, this.contentChatPanelMain.Height, 0, 0);
             this.contentChatPanelMain.Controls.Clear();
@@ -56,6 +56,7 @@ namespace WinProjectSerialPrort
             this.portname = txtPortName.Text;                
             this.mySerialPort = new MySerialPort(this.portname, getRatio());
             this.mySerialPort.messageIsHere += new MySerialPort.HandlerReceiveMessage(this.messageReceived);
+            this.mySerialPort.tramaHire += new MySerialPort.HandlerReceiveTrama(this.onTramaHire);
             try { 
             if (mySerialPort.Connect())
             {             
@@ -123,15 +124,23 @@ namespace WinProjectSerialPrort
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            if (this.txtMessage.Text!="")
+
+
+
+            if (this.listPathFiles.Count != 0)
+            {
+                this.mySerialPort.SendFiles(this.listPathFiles);
+            }
+            this.listPathFiles.Clear();
+            if (this.txtMessage.Text != null)
             {
                 try
                 {
-                    string message = this.mySerialPort.Send(this.txtMessage.Text);
-                    lblResponse.Text = message;               
-                    this.myChatPanel.addNewMessage(this.txtMessage.Text,"Me",false);
+                    string message=this.mySerialPort.SendMessage(this.txtMessage.Text.Trim());                    
+                    lblResponse.Text = message;
+                    this.myChatPanel.addNewMessage(this.txtMessage.Text, "Me", false);
                     this.lblResponse.ForeColor = Color.Green;
-                    this.txtMessage.Text = "";                    
+                    this.txtMessage.Text = "";
                 }
                 catch (Exception err)
                 {
@@ -139,6 +148,7 @@ namespace WinProjectSerialPrort
                     this.lblResponse.ForeColor = Color.Red;
                 }
             }
+
 
         }
 
@@ -161,6 +171,11 @@ namespace WinProjectSerialPrort
             //this.ppppp.Text = message;
 
         }
+        private void onTramaHire(string key, float progress, float tramas, string nombre)
+        {
+            lblResponse.Text ="Key: "+ key+" ;Progress: "+progress.ToString() + " ;Tramas: " + tramas.ToString();
+        }
+
         private void updateScroll()
         {
             this.contentChatPanelMain.VerticalScroll.Value = 

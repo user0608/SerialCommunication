@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace MySerialPortKS
 {
-    public class Trama
+    public class Frame
     {
 
         public static byte TYPE_MESSAGE = 109;
         public static byte TYPE_FILE = 102;
+
         private static string EXTENSION_MESSAGE = "smssm";
   
         public static int FRAME_DATA = 1024;
@@ -22,27 +23,27 @@ namespace MySerialPortKS
         public static int FRAME_TYPE = 1;
 
               
-        private byte[] myTrama;
-        public Trama()
+        private byte[] myFrame;
+        public Frame()
         {
-            this.myTrama = new byte[getFrameLength()];
+            this.myFrame = new byte[getFrameLength()];
         }
 
        public static int getFrameLength()
        {
-            return
+            return(
                 FRAME_DATA +
-                getFrameHeadLength();
+                getFrameHeadLength());
        }
         public static int getFrameHeadLength()
         {
-            return
+            return(
                 FRAME_NUMBER +
                 FRAME_NUM_FRAMES +
                 FRAME_LENGTH_DATA +
                 FRAME_EXTENSION +
                 FRAME_KEY +
-                FRAME_TYPE;
+                FRAME_TYPE);
         }
 
         private byte[] convertStringToBytes(string data)
@@ -55,18 +56,18 @@ namespace MySerialPortKS
             int index = 0;
             for (int i = lengthBackFields - data.Length; i < lengthBackFields; i++)
             {
-                this.myTrama[i] = data[index];
+                this.myFrame[i] = data[index];
                 index++;
             }
         }
 
-        private void setTramaHead(byte[] lengthData,byte[] number,byte[] numFrames,byte[] extension,byte[] key, byte type)
+        private void setFrameHead(byte[] lengthData,byte[] number,byte[] numFrames,byte[] extension,byte[] key, byte type)
         {
             //Clear data of the frame head.            
-            for (int i = 0; i < getFrameHeadLength(); i++) this.myTrama[i] = 48;            
+            for (int i = 0; i < getFrameHeadLength(); i++) this.myFrame[i] = 48;            
 
             //set type of frame
-            this.myTrama[0] = type;
+            this.myFrame[0] = type;
             
             int lengthBackFields = FRAME_TYPE + FRAME_KEY;
             this.setFieldsHead(key, lengthBackFields);
@@ -85,33 +86,38 @@ namespace MySerialPortKS
         }
 
         //Codifica el mensaje en la trama body.
-        private void setTramaBody(byte[] message)
+        private void setFrameBody(byte[] message)
         {
             int lengthMessage = message.Length;
             if (lengthMessage > FRAME_DATA) lengthMessage = FRAME_DATA;
             for (int i = getFrameHeadLength(); i < lengthMessage + getFrameHeadLength(); i++)
             {
-                this.myTrama[i] = message[i - getFrameHeadLength()];
+                this.myFrame[i] = message[i - getFrameHeadLength()];
             }
         }
 
-        public void SetTrama(string message,int key)
+        public void SetFrame(string message, int key)
         {
-            this.SetTrama(this.convertStringToBytes(message),Trama.TYPE_MESSAGE,key.ToString(),EXTENSION_MESSAGE,1,1);
+            this.SetFrame(
+                this.convertStringToBytes(message)
+                , message.Length,
+                Frame.TYPE_MESSAGE,
+                key.ToString(), 
+                EXTENSION_MESSAGE, 1, 1);
         }
-        public void SetTrama(byte[] data,byte type,string key,string extension,int numFrames,int number)
+        public void SetFrame(byte[] data,int dataLength,byte type,string key,string extension,float numFrames,float number)
         {           
             byte[] bytesKey = this.convertStringToBytes(key);
             byte[] bytesExtencion = this.convertStringToBytes(extension);
             byte[] bytesNumFrames= this.convertStringToBytes(numFrames.ToString());
             byte[] bytesNumber= this.convertStringToBytes(number.ToString());
-            byte[] bytesLengthData = this.convertStringToBytes(data.Length.ToString());
-            this.setTramaHead(bytesLengthData, bytesNumber, bytesNumFrames, bytesExtencion,bytesKey,type);
-            this.setTramaBody(data);
+            byte[] bytesLengthData = this.convertStringToBytes(dataLength.ToString());
+            this.setFrameHead(bytesLengthData, bytesNumber, bytesNumFrames, bytesExtencion,bytesKey,type);
+            this.setFrameBody(data);
         }
-        public byte[] GetTrama()
+        public byte[] GetFrame()
         {
-            return this.myTrama;
+            return this.myFrame;
         }
 
     }

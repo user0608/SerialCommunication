@@ -11,12 +11,17 @@ namespace MySerialPortKS
         private bool file;
         private string message;
 
+        private KFile fileToSend;
+        private KFile.FileResponse response;
+
+
         private int index;
-        private Trama trama;
+        private Frame trama;
         
+
         public Resource(bool file)
         {
-            this.trama = new Trama();
+            this.trama = new Frame();
             this.file = file;
         }
         public void setMessage(string message)
@@ -30,6 +35,10 @@ namespace MySerialPortKS
                 throw new Exception("File mode actived");
             }
         }
+        public void SetFile(KFile file)
+        {
+            this.fileToSend = file;
+        }
 
         public bool isCompleted()
         {
@@ -39,7 +48,7 @@ namespace MySerialPortKS
             }
             else
             {
-                   return false;
+                return this.response.IsCompleted();
             }
         }
 
@@ -47,12 +56,26 @@ namespace MySerialPortKS
         {
             if (this.file)
             {
-                return new byte[1];
+              
+                float numFrames = fileToSend.GetNumBytes() / 1024;
+                if (numFrames != (int)numFrames && (int)(numFrames % 1024) != 0) numFrames = (int)numFrames + 1;
+
+                this.response = this.fileToSend.Read();
+                this.trama.SetFrame(
+                    this.response.GetBytes(),
+                    this.response.GetLength(),
+                    Frame.TYPE_FILE,
+                    getIndex().ToString(),
+                    this.fileToSend.GetFileExtension(),
+                    numFrames, 
+                    fileToSend.GetProgress()
+                    );
+                return this.trama.GetFrame();
             }
             else
             {
-                this.trama.SetTrama(this.message,this.index);
-                return this.trama.GetTrama();
+                this.trama.SetFrame(this.message,this.index);
+                return this.trama.GetFrame();
             }
         }
 
@@ -64,5 +87,7 @@ namespace MySerialPortKS
         {
             return this.index;
         }
+
+       
     }
 }
