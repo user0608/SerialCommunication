@@ -71,7 +71,7 @@ namespace MySerialPortKS
                     byte[] data = new byte[TAM_DATA];
                     int length = myReader.Read(data, 0, TAM_DATA);
                     this.progress++;
-                    return new FileResponse(data, length, length < TAM_DATA);
+                    return new FileResponse(data,length, length < TAM_DATA);
                 }
             }
             else

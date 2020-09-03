@@ -47,7 +47,7 @@ namespace MySerialPortKS
         }
 
         private byte[] convertStringToBytes(string data)
-        {
+        {           
             return ASCIIEncoding.UTF8.GetBytes(data);
         }
 
@@ -64,7 +64,7 @@ namespace MySerialPortKS
         private void setFrameHead(byte[] lengthData,byte[] number,byte[] numFrames,byte[] extension,byte[] key, byte type)
         {
             //Clear data of the frame head.            
-            for (int i = 0; i < getFrameHeadLength(); i++) this.myFrame[i] = 48;            
+            for (int i = 0; i < getFrameHeadLength(); i++) this.myFrame[i] = ASCIIEncoding.ASCII.GetBytes("0")[0];            
 
             //set type of frame
             this.myFrame[0] = type;
@@ -86,11 +86,10 @@ namespace MySerialPortKS
         }
 
         //Codifica el mensaje en la trama body.
-        private void setFrameBody(byte[] message)
-        {
-            int lengthMessage = message.Length;
-            if (lengthMessage > FRAME_DATA) lengthMessage = FRAME_DATA;
-            for (int i = getFrameHeadLength(); i < lengthMessage + getFrameHeadLength(); i++)
+        private void setFrameBody(byte[] message,int dataLenght)
+        {            
+            if (dataLenght > FRAME_DATA) dataLenght = FRAME_DATA;
+            for (int i = getFrameHeadLength(); i < dataLenght + getFrameHeadLength(); i++)
             {
                 this.myFrame[i] = message[i - getFrameHeadLength()];
             }
@@ -113,7 +112,7 @@ namespace MySerialPortKS
             byte[] bytesNumber= this.convertStringToBytes(number.ToString());
             byte[] bytesLengthData = this.convertStringToBytes(dataLength.ToString());
             this.setFrameHead(bytesLengthData, bytesNumber, bytesNumFrames, bytesExtencion,bytesKey,type);
-            this.setFrameBody(data);
+            this.setFrameBody(data,dataLength);
         }
         public byte[] GetFrame()
         {

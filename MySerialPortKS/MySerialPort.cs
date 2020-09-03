@@ -70,11 +70,16 @@ namespace MySerialPortKS
         public bool Connect(){
             try{
                 serialPort = new SerialPort(portName, this.speedBaudios, Parity.Even, 8, StopBits.Two);
+                //serialPort.WriteBufferSize = Frame.getFrameLength() * 5;
+                //serialPort.ReadBufferSize= Frame.getFrameLength() * 5;
+                serialPort.ReadTimeout = 500;
+                serialPort.WriteTimeout = 500;
+                //serialPort.Handshake = Handshake.XOnXOff;
                 //  serialPort.ReceivedBytesThreshold = Frame.getFrameLength();
                 //  serialPort.DataReceived += new SerialDataReceivedEventHandler(receivingData);                            
             }
-            catch{
-                throw new Exception("Invalid port");
+            catch(Exception ee){
+                throw new Exception(ee.Message);
             }
             try{
                 serialPort.Open();
@@ -87,9 +92,11 @@ namespace MySerialPortKS
                 this.receiveMessageThread = new Thread(this.receivingData);
                 this.receiveMessageThread.Start();
                 return true;
-            }catch{
-                return false;
             }
+            catch (Exception ee)
+            {
+                throw new Exception(ee.Message);
+            }           
         }        
        
         public bool Disconnect()
@@ -207,10 +214,10 @@ namespace MySerialPortKS
                 Monitor.Enter(serialPort,ref _loockTaken);
                 try
                 {
-                    if (serialPort.BytesToRead != 0)
+                    Thread.Sleep(10);
+                    if (serialPort.BytesToRead>0)
                     {
                         byte[] receivedMessage = new byte[Frame.getFrameLength()];
-
                         this.serialPort.Read(receivedMessage, 0, Frame.getFrameLength());
 
                         this.smsToRecieve = ASCIIEncoding.UTF8.GetString(receivedMessage, 0, Frame.getFrameLength());

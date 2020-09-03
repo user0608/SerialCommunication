@@ -17,7 +17,7 @@ namespace MyComponets
         private const int HEIGHT_LBL_MESSAGE = 90;
 
         public delegate void ActionClick(Object oo);
-        public event ActionClick clickAccept;
+        //public event ActionClick clickAccept;
         public static int MESSAGE_TYPE_SUCCESS=876789;
         public static int MESSAGE_TYPE_WARNING = 463574;
         public static int MESSAGE_TYPE_ERROR = 383223;

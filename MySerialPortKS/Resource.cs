@@ -57,9 +57,7 @@ namespace MySerialPortKS
             if (this.file)
             {
               
-                float numFrames = fileToSend.GetNumBytes() / 1024;
-                if (numFrames != (int)numFrames && (int)(numFrames % 1024) != 0) numFrames = (int)numFrames + 1;
-
+                float numFrames = (UInt64)(fileToSend.GetNumBytes()+1023) / 1024;
                 this.response = this.fileToSend.Read();
                 this.trama.SetFrame(
                     this.response.GetBytes(),
@@ -78,7 +76,10 @@ namespace MySerialPortKS
                 return this.trama.GetFrame();
             }
         }
-
+        public void CloseStream()
+        {
+            if(this.file)this.fileToSend.Close();
+        }
         public void setIndex(int index)
         {
             this.index = index;
@@ -87,7 +88,5 @@ namespace MySerialPortKS
         {
             return this.index;
         }
-
-       
     }
 }

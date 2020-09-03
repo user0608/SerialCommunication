@@ -16,7 +16,7 @@ namespace WinProjectSerialPrort
     {
         private MySerialPort mySerialPort;
         private string portname;
-        private int speedBaudios;
+       // private int speedBaudios;
         private ChatPanel myChatPanel;
 
         private List<String> listPathFiles;
@@ -43,7 +43,7 @@ namespace WinProjectSerialPrort
             try
             {
                 return (int)Int32.Parse(this.txtRatioBaudios.Text);
-            }catch(Exception e)
+            }catch
             {
                 MessageBox.Show("Ratio baudios invalid");
                 this.txtRatioBaudios.Text = "57600";
