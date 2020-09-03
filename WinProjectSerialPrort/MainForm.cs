@@ -181,12 +181,6 @@ namespace WinProjectSerialPrort
             this.contentChatPanelMain.VerticalScroll.Value = 
                 this.contentChatPanelMain.VerticalScroll.Maximum;
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            KMessageBox.show(this.Location,"Hola a todos como estan este es un pp","mi title");
-        }
-
         private void txtMessage_DragDrop(object sender, DragEventArgs e)
         {
             this.txtMessage.ForeColor = Color.BlueViolet;
