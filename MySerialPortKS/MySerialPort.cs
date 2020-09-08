@@ -27,8 +27,10 @@ namespace MySerialPortKS
         public delegate void HandlerReceiveMessage(object oo, string message);
         public event HandlerReceiveMessage messageIsHere;
 
-        public delegate void HandlerReceiveTrama(string key,float progress,float tramas,string nombre);
-        public HandlerReceiveTrama tramaHire;
+        public delegate void HandlerNotifyProgress(string path,string key,float progress,float tramas);
+        public HandlerNotifyProgress tramaHire;
+        public HandlerNotifyProgress sendingProgress;
+        public HandlerNotifyProgress notifyName;
 
         public Thread theBufferIsReady;
         public bool processeThreadBuffer;
@@ -49,6 +51,8 @@ namespace MySerialPortKS
             this.myReceiveFileController = new ReceiveFileController();
             this.mysentFileController = new SentFileController();
             this.mysentFileController.frameToSend += new SentFileController.EncodedTrame(frameReadyToSend);
+            this.mysentFileController.notifyFileProgress += new SentFileController.HandlerNotifyFileProgress(this.notifyFileProgress);
+            this.mysentFileController.notifyFile += new SentFileController.HandlerNotifyFileProgress(this.notifyFileName);
             try
             {
                 if (!(Directory.Exists(@".\Received_file_" + this.portName)))
@@ -69,14 +73,10 @@ namespace MySerialPortKS
         }
         public bool Connect(){
             try{
-                serialPort = new SerialPort(portName, this.speedBaudios, Parity.Even, 8, StopBits.Two);
-                //serialPort.WriteBufferSize = Frame.getFrameLength() * 5;
-                //serialPort.ReadBufferSize= Frame.getFrameLength() * 5;
+                serialPort = new SerialPort(portName, this.speedBaudios, Parity.Even, 8, StopBits.Two);              
+                serialPort.ReadBufferSize= 10470;
                 serialPort.ReadTimeout = 500;
-                serialPort.WriteTimeout = 500;
-                //serialPort.Handshake = Handshake.XOnXOff;
-                //  serialPort.ReceivedBytesThreshold = Frame.getFrameLength();
-                //  serialPort.DataReceived += new SerialDataReceivedEventHandler(receivingData);                            
+                serialPort.WriteTimeout = 500;                                      
             }
             catch(Exception ee){
                 throw new Exception(ee.Message);
@@ -111,9 +111,16 @@ namespace MySerialPortKS
                 return false;
             }
         }
+        public void notifyFileName(string key, string path, float totalFrames, float progress)
+        {
+            if (notifyName != null) this.notifyName(path, key, progress, totalFrames);
+        }
+        public void notifyFileProgress(string key, string path, float totalFrames, float progress)
+        {
+            if (sendingProgress != null) this.sendingProgress(path, key, progress, totalFrames);
+        }
 
         //Recopera la longitud del mensaje codificada en la cabecera de la trama
-
         private int recoveryNumberOfProgress()
         {
             int start = Frame.FRAME_TYPE + Frame.FRAME_KEY + Frame.FRAME_EXTENSION + Frame.FRAME_LENGTH_DATA + Frame.FRAME_NUM_FRAMES;
@@ -214,12 +221,11 @@ namespace MySerialPortKS
                 Monitor.Enter(serialPort,ref _loockTaken);
                 try
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(1);
                     if (serialPort.BytesToRead>0)
                     {
                         byte[] receivedMessage = new byte[Frame.getFrameLength()];
                         this.serialPort.Read(receivedMessage, 0, Frame.getFrameLength());
-
                         this.smsToRecieve = ASCIIEncoding.UTF8.GetString(receivedMessage, 0, Frame.getFrameLength());
 
                         if (receivedMessage[0] == Frame.TYPE_MESSAGE)
@@ -241,14 +247,13 @@ namespace MySerialPortKS
                                 string name = this.RecoveryFrameData();
                                 string nameFile = @".\Received_file_" + this.portName + "\\" + name;
                                 this.myReceiveFileController.InitFileStream(nameFile, key);
-                                if (this.tramaHire != null) this.tramaHire(key, frameProgress, totalFrames, name);
+                                if (this.tramaHire != null) this.tramaHire(name,key, frameProgress, totalFrames);
                             }
                             else
                             {
                                 this.myReceiveFileController.WriteFile(key, data, lengthData, totalFrames, frameProgress);
-                                if (this.tramaHire != null) this.tramaHire(key, frameProgress, totalFrames, "");
+                                if (this.tramaHire != null) this.tramaHire("...null...",key, frameProgress, totalFrames);
                             }
-
                         }
                     }
                     else Thread.Sleep(100);

@@ -10,13 +10,17 @@ namespace MySerialPortKS
     {
         private bool file;
         private string message;
+        public delegate void HandlerNotifyProgress(string key,float totalFrame,float progress);
+        public HandlerNotifyProgress notifyProgress;
 
         private KFile fileToSend;
         private KFile.FileResponse response;
 
 
-        private int index;
+        private int key;        
         private Frame trama;
+
+        
         
 
         public Resource(bool file)
@@ -35,9 +39,15 @@ namespace MySerialPortKS
                 throw new Exception("File mode actived");
             }
         }
+        public string getPath()
+        {
+            if (this.file) return this.message;
+            return "";
+        }
         public void SetFile(KFile file)
         {
             this.fileToSend = file;
+            this.message = file.GetFileName();
         }
 
         public bool isCompleted()
@@ -51,7 +61,10 @@ namespace MySerialPortKS
                 return this.response.IsCompleted();
             }
         }
-
+        public bool isFile()
+        {
+            return this.file;
+        }
         public byte[] getTrama()
         {
             if (this.file)
@@ -67,12 +80,13 @@ namespace MySerialPortKS
                     this.fileToSend.GetFileExtension(),
                     numFrames, 
                     fileToSend.GetProgress()
-                    );
+                    );                
+                if (this.notifyProgress != null) this.notifyProgress(this.getIndex().ToString(),numFrames, fileToSend.GetProgress());
                 return this.trama.GetFrame();
             }
             else
             {
-                this.trama.SetFrame(this.message,this.index);
+                this.trama.SetFrame(this.message,this.key);
                 return this.trama.GetFrame();
             }
         }
@@ -82,11 +96,11 @@ namespace MySerialPortKS
         }
         public void setIndex(int index)
         {
-            this.index = index;
+            this.key = index;
         }
         public int getIndex()
         {
-            return this.index;
+            return this.key;
         }
     }
 }

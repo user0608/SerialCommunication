@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnSend = new System.Windows.Forms.Button();
-            this.txtMessage = new System.Windows.Forms.TextBox();
-            this.lblResponse = new System.Windows.Forms.Label();
             this.lblState = new System.Windows.Forms.Label();
             this.btnConnect = new System.Windows.Forms.Button();
             this.txtPortName = new System.Windows.Forms.ComboBox();
@@ -39,44 +36,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.contentChatPanelMain = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btnSend
-            // 
-            this.btnSend.BackColor = System.Drawing.Color.Teal;
-            this.btnSend.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnSend.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(214)))), ((int)(((byte)(199)))));
-            this.btnSend.FlatAppearance.BorderSize = 0;
-            this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(491, 344);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(89, 30);
-            this.btnSend.TabIndex = 0;
-            this.btnSend.Text = "Send";
-            this.btnSend.UseVisualStyleBackColor = false;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
-            // txtMessage
-            // 
-            this.txtMessage.Location = new System.Drawing.Point(40, 347);
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(440, 20);
-            this.txtMessage.TabIndex = 1;
-            this.txtMessage.TextChanged += new System.EventHandler(this.txtMessage_TextChanged);
-            this.txtMessage.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtMessage_DragDrop);
-            this.txtMessage.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtMessage_DragEnter);
-            this.txtMessage.DragOver += new System.Windows.Forms.DragEventHandler(this.txtMessage_DragOver);
-            this.txtMessage.DragLeave += new System.EventHandler(this.txtMessage_DragLeave);
-            // 
-            // lblResponse
-            // 
-            this.lblResponse.AutoSize = true;
-            this.lblResponse.Location = new System.Drawing.Point(37, 331);
-            this.lblResponse.Name = "lblResponse";
-            this.lblResponse.Size = new System.Drawing.Size(40, 13);
-            this.lblResponse.TabIndex = 2;
-            this.lblResponse.Text = "Estado";
             // 
             // lblState
             // 
@@ -163,12 +124,23 @@
             this.contentChatPanelMain.Size = new System.Drawing.Size(540, 252);
             this.contentChatPanelMain.TabIndex = 12;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(176, 18);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(611, 435);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.contentChatPanelMain);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -177,9 +149,6 @@
             this.Controls.Add(this.txtPortName);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.lblState);
-            this.Controls.Add(this.lblResponse);
-            this.Controls.Add(this.txtMessage);
-            this.Controls.Add(this.btnSend);
             this.Name = "MainForm";
             this.Text = "WinChat";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
@@ -190,11 +159,6 @@
         }
 
         #endregion
-
-       
-        private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.TextBox txtMessage;
-        private System.Windows.Forms.Label lblResponse;
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.ComboBox txtPortName;
@@ -203,6 +167,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel contentChatPanelMain;
+        private System.Windows.Forms.Button button1;
     }
 }
 

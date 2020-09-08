@@ -21,3 +21,4 @@ C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\bin\Debug
 C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.CopyComplete
 C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.exe
 C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.pdb
+C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.Components.InputBox.resources

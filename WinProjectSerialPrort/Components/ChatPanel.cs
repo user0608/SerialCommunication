@@ -19,16 +19,23 @@ namespace MyComponets
         /// </summary>
         const int PADD_LBL_MENSAJE_X = 6;
         const int PADD_LBL_MESSAGE_Y_TOP = 6;
-        const int PADD_LBL_MESSAGE_Y_BOTTOM = 10;
+        const int PADD_LBL_MESSAGE_Y_BOTTOM = 8;
 
 
-        const int SPACE_BETWEEN_MESSAGEBOX = 13;
+        const int SPACE_BETWEEN_MESSAGEBOX = 4;
         const int HEIGHT_LINE_PX = 13;
         private List<ItemChat> historyChatList;
         private int position_y;
         private int position_x;
         private int width_panel;
-        private int height_panel;
+        private int height_panel;    
+
+        private Dictionary<string,ItemChat> chatFileItems;
+        private delegate void HandlerUpdate(string key, float progress);
+        private delegate void HandelerADD(ItemChat item);
+        private HandlerUpdate update;
+        private HandelerADD add;
+
 
         public delegate void ChangeheightPanel();
         public ChangeheightPanel changeheightPanel;
@@ -36,13 +43,16 @@ namespace MyComponets
         public ChatPanel(int width, int height,int x,int y)
         {
             this.historyChatList = new List<ItemChat>();
+            this.chatFileItems = new Dictionary<string, ItemChat>();
             this.width_panel = width;
             this.height_panel = height;
             this.MinimumSize = new Size(width, height);
             this.Location = new Point(x, y);
             this.BorderStyle= System.Windows.Forms.BorderStyle.Fixed3D;
             this.position_y = 9;
-            this.position_x = 10;           
+            this.position_x = 10;
+            this.update += new HandlerUpdate(this.up);
+            this.add += new HandelerADD(this.addFile);
         }
         private Size calcSizeBoxMensaje(string mensaje)
         {            
@@ -65,6 +75,7 @@ namespace MyComponets
             }
             y = this.position_y;
             this.position_y += (heightMessageBox + SPACE_BETWEEN_MESSAGEBOX);
+            
             return new Point(x,y);
         }   
         
@@ -72,8 +83,7 @@ namespace MyComponets
         {
             Size size = this.calcSizeBoxMensaje(message);
             Point point = this.calcPosittionBoxMessage(received, size.Width, size.Height);
-            ItemChat item = new ItemChat(size, point, message, title, received);
-            this.historyChatList.Add(item);
+            ItemChat item = new ItemChat(size, point, message, received);       
             this.Controls.Add(item);
             if (position_y >this.Height)
             {
@@ -84,33 +94,76 @@ namespace MyComponets
                 this.changeheightPanel();
             }
         }
+        public void addNewFile(string key,string path,bool received)
+        {
+            Size size = this.calcSizeBoxMensaje(path);
+            Point point = this.calcPosittionBoxMessage(received, size.Width, size.Height);
+            ItemChat item = new ItemChat(size, point, path, received,true);            
+            this.chatFileItems.Add(key,item);
+            if(this.add !=null)Invoke(this.add,item);
+            if (position_y > this.Height)
+            {
+                this.Height = position_y;
+            }
+            if (this.changeheightPanel != null)
+            {
+                this.changeheightPanel();
+            }
+        }
+        public void addFile(ItemChat item)
+        {
+            this.Controls.Add(item);
+        }
+        public void upadateProgress(string key, float progress)
+        {
+            Invoke(this.update, key, progress);
+        }
+        public void up(string key,float progress)
+        {
+            if (this.chatFileItems != null) this.chatFileItems[key].updateProgress(progress);
+        }
+
         public class ItemChat : Panel
         {
             private bool received;
-            private Label title;
-            private Label message;      
-            public ItemChat(Size sise,Point point,string message,string title,bool received)
+         
+            private Label message;
+            private Label progress;
+
+
+            public ItemChat(Size sise, Point point, string message, bool received)
+               :this(sise,point,message,received,false)
+            {                
+            }
+            public ItemChat(Size sise,Point point,string path,bool received,bool file)
             {
                 this.Size = sise;
                 this.Location = point;                
                 this.received = received;
                 this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                this.initializeComponents(message, title,received);
-            }
-            private void initializeComponents(string message,string title,bool received)
+                this.initializeComponents(path,received,true);
+            }          
+            public void updateProgress(float progress)
             {
-
-                this.title = new Label();
-                this.title.Location = new Point(PADD_LBL_MENSAJE_X,0);
-                this.title.Text = title;
-
+                float prog = ((int)(progress*100))/ 100;
+                if(this.progress!=null )this.progress.Text = (prog).ToString()+"%";
+            }
+            
+            private void initializeComponents(string message,bool received,bool file)
+            {   if (file)
+                {
+                    this.progress = new Label();
+                    this.progress.Text = "0%";
+                }
                 this.message = new Label();
                 this.message.Text = message;
-                this.message.Location = new Point(PADD_LBL_MENSAJE_X,PADD_LBL_MESSAGE_Y_TOP);
+                this.message.Location = new Point(PADD_LBL_MENSAJE_X,PADD_LBL_MESSAGE_Y_TOP);               
                 this.message.Size =new Size(
-                    this.Size.Width-2* PADD_LBL_MENSAJE_X,
+                    this.Size.Width-2*PADD_LBL_MENSAJE_X - (file?40:0),
                     this.Size.Height- PADD_LBL_MESSAGE_Y_TOP- PADD_LBL_MESSAGE_Y_BOTTOM);
                 this.message.AutoSize = false;
+                if (file)this.progress.Location = new Point(this.Size.Width -30, PADD_LBL_MESSAGE_Y_TOP);
+                this.progress.AutoSize = true;
                 if (received)
                 {
                     this.BackColor = Color.White;
@@ -118,13 +171,11 @@ namespace MyComponets
                 else
                 {
                     this.BackColor = Color.Teal;
-                    this.ForeColor = Color.White;
-                    this.title.ForeColor = Color.White; 
+                    this.ForeColor = Color.White;                   
                     this.message.ForeColor = Color.White;
                 }
-
-             //   this.Controls.Add(this.title);
                 this.Controls.Add(this.message);
+                if(file)this.Controls.Add(this.progress);
             }
         }
     }    

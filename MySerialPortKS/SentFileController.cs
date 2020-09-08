@@ -12,12 +12,13 @@ namespace MySerialPortKS
        
         private int indexCounter;
         private bool processState;
-        public delegate void EncodedTrame(byte[] frame);
-        public delegate void DelegateStatusResource(Resource file);
+        public delegate void EncodedTrame(byte[] frame);       
+        public delegate void HandlerNotifyFileProgress(string key,string path,float totalFrames,float progress);
         public  EncodedTrame frameToSend;
-        //public DelegateStatusResource statusOfSendFile;
-        
-        
+        public HandlerNotifyFileProgress notifyFile;
+        public HandlerNotifyFileProgress notifyFileProgress;
+
+
         private bool bufferIsEmpty;
         private List<Resource> storeResource;
         private List<Resource> processingResource;
@@ -32,20 +33,25 @@ namespace MySerialPortKS
             processesSend = new Thread(this.sendDataProcess);
             this.processesSend.Start();
         }
+        private void notifyProgress(string key, float totalFrame, float progress)
+        {
+            if (notifyFileProgress != null) this.notifyFileProgress(key,"...null..." ,totalFrame, progress);
+        }
 
         public void addStoreResource(Resource file)
         {
             Resource f = file;
-            f.setIndex(indexCounter);
-            this.indexCounter++;
+            f.setIndex(indexCounter);           
             if (this.indexCounter >= 999)
                 this.indexCounter = 100;
-            
+            f.notifyProgress += new Resource.HandlerNotifyProgress(this.notifyProgress);
             Boolean _lockTeken = false;
             Monitor.Enter(storeResource, ref _lockTeken);
             try
             {
                 this.storeResource.Add(f);
+                if (this.notifyFile != null&&f.isFile()) this.notifyFile(indexCounter.ToString(),f.getPath(),0,0);
+                this.indexCounter++;
             }
             finally
             {
@@ -84,9 +90,8 @@ namespace MySerialPortKS
                     foreach (Resource rec in processingResource)
                     {
                         byte[] trama = rec.getTrama();
-                        if (this.frameToSend != null) this.frameToSend(trama);
-                       // if (this.statusOfSendFile != null) this.statusOfSendFile(rec);
-                        Thread.Sleep(100);                         
+                        if (this.frameToSend != null) this.frameToSend(trama);                       
+                        Thread.Sleep(4);                         
                         if (rec.isCompleted())
                         {
                             rec.CloseStream();
