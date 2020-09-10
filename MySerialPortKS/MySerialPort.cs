@@ -49,7 +49,7 @@ namespace MySerialPortKS
             
             this.portName = portName;
             this.myReceiveFileController = new ReceiveFileController();
-            this.mysentFileController = new SentFileController();
+            this.mysentFileController = new SentFileController(this.portName);
             this.mysentFileController.frameToSend += new SentFileController.EncodedTrame(frameReadyToSend);
             this.mysentFileController.notifyFileProgress += new SentFileController.HandlerNotifyFileProgress(this.notifyFileProgress);
             this.mysentFileController.notifyFile += new SentFileController.HandlerNotifyFileProgress(this.notifyFileName);
@@ -245,7 +245,7 @@ namespace MySerialPortKS
                             if (frameProgress == 0)
                             {
                                 string name = this.RecoveryFrameData();
-                                string nameFile = @".\Received_file_" + this.portName + "\\" + name;
+                                string nameFile = @".\Received_file_" + this.portName + "\\" + name.Trim();
                                 this.myReceiveFileController.InitFileStream(nameFile, key);
                                 if (this.tramaHire != null) this.tramaHire(name,key, frameProgress, totalFrames);
                             }

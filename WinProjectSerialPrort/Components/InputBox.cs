@@ -97,6 +97,7 @@ namespace WinProjectSerialPrort.Components
             this.filePaths.Clear();
             this.myDataGridView.Rows.Clear();
             this.message = "";
+            this.txtMessage.Text = "";
             this.txtMessage.Visible=true;
             this.myDataGridView.Visible = false;
         }

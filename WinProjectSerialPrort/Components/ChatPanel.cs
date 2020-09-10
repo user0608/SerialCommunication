@@ -77,8 +77,7 @@ namespace MyComponets
             this.position_y += (heightMessageBox + SPACE_BETWEEN_MESSAGEBOX);
             
             return new Point(x,y);
-        }   
-        
+        }           
         public void addNewMessage(string message, string title, bool received)
         {
             Size size = this.calcSizeBoxMensaje(message);

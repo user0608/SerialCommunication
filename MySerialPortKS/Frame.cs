@@ -119,5 +119,19 @@ namespace MySerialPortKS
             return this.myFrame;
         }
 
+
+
+        public static void Main(String[] args)
+        {
+
+
+            for (int i=0;i<100; i++)
+            {                
+                Frame tram = new Frame();
+                Console.WriteLine(tram.convertStringToBytes("hola" + i.ToString()).Length);               
+                
+            }
+
+        }
     }
 }

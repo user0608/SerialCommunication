@@ -24,14 +24,29 @@ namespace MySerialPortKS
         private List<Resource> processingResource;
         private Thread processesSend;
        
-        public SentFileController(){
+        public SentFileController(string portname){
             this.storeResource = new List<Resource>();
             this.processingResource = new List<Resource>();
-            this.bufferIsEmpty = true;
-            this.indexCounter = 100;
+            this.initCouterKey(portname);
+            this.bufferIsEmpty = true;          
             this.processState = true;
             processesSend = new Thread(this.sendDataProcess);
             this.processesSend.Start();
+        }
+        private void initCouterKey(string port)
+        {
+            switch (port)
+            {
+                case "COM1":this.indexCounter = 100; break;
+                case "COM2":this.indexCounter = 200; break;
+                case "COM3":this.indexCounter = 300; break;
+                case "COM4":this.indexCounter = 400; break;
+                case "COM5":this.indexCounter = 500; break;
+                case "COM6":this.indexCounter = 600; break;
+                case "COM7":this.indexCounter = 700; break;
+                case "COM8":this.indexCounter = 800; break;
+                case "COM9":this.indexCounter = 900; break;
+            }
         }
         private void notifyProgress(string key, float totalFrame, float progress)
         {

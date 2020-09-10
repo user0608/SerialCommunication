@@ -25,6 +25,8 @@ namespace WinProjectSerialPrort
 
         public delegate void HandlerReceivedMessage(string message);
         HandlerReceivedMessage loadMessageReived;
+        public delegate void HandelerUpdateScroll();
+        private HandelerUpdateScroll onUpdateScorll;
 
         public MainForm()
         {
@@ -42,6 +44,10 @@ namespace WinProjectSerialPrort
             this.myInputBox.onFilesSend += new InputBox.HandlerSentFileClick(this.onSentFiles);
             this.myInputBox.onMessageSend += new InputBox.HandlerSentMessageClick(this.onSentMessage);
             this.Controls.Add(this.myInputBox);
+            this.onUpdateScorll += new HandelerUpdateScroll(this.OnUpdateSrollAction);
+            this.MaximizeBox = false;
+            this.MaximumSize = this.Size;
+            this.MinimumSize = this.Size;
         }
 
         private int getRatio()
@@ -143,7 +149,7 @@ namespace WinProjectSerialPrort
         }
         private void loadMessage(string message)
         {
-            this.myChatPanel.addNewMessage(message, "Received", true);                        
+            this.myChatPanel.addNewMessage(message, "Received", false);                        
 
         }
         private void onFileNameAddToCahtPanel(string path, string key, float progress, float tramas)
@@ -164,15 +170,15 @@ namespace WinProjectSerialPrort
             else
             {
                 this.myChatPanel.addNewFile(key,path,false);
-            }
-            //this.button1.Text = progress.ToString();
+            }           
         }
 
-        private void updateScroll()
+        private void OnUpdateSrollAction()
         {
-            //this.contentChatPanelMain.VerticalScroll.Value =
-            //this.contentChatPanelMain.VerticalScroll.Maximum;           
+            this.contentChatPanelMain.VerticalScroll.Value =
+            this.contentChatPanelMain.VerticalScroll.Maximum;
         }
+        private void updateScroll(){ Invoke(onUpdateScorll);}
 
         private bool onSentMessage(string message)
         {                       
