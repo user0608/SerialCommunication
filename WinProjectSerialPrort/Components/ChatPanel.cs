@@ -33,6 +33,12 @@ namespace MyComponets
         private Dictionary<string,ItemChat> chatFileItems;
         private delegate void HandlerUpdate(string key, float progress);
         private delegate void HandelerADD(ItemChat item);
+        private delegate void HandelerADDMessage(string message, string title, bool received);
+        private delegate void HandelerAddNewFile(string key, string path, bool received);
+
+
+        private HandelerADDMessage actionAddMessage;
+        private HandelerAddNewFile actionAddNewFile;
         private HandlerUpdate update;
         private HandelerADD add;
 
@@ -53,6 +59,8 @@ namespace MyComponets
             this.position_x = 10;
             this.update += new HandlerUpdate(this.up);
             this.add += new HandelerADD(this.addFile);
+            this.actionAddMessage += new HandelerADDMessage(this.onAddNewMessage);
+            this.actionAddNewFile += new HandelerAddNewFile(this.onAddNewFile);
         }
         private Size calcSizeBoxMensaje(string mensaje)
         {            
@@ -78,28 +86,12 @@ namespace MyComponets
             
             return new Point(x,y);
         }           
-        public void addNewMessage(string message, string title, bool received)
+        public void onAddNewMessage(string message, string title, bool received)
         {
             Size size = this.calcSizeBoxMensaje(message);
             Point point = this.calcPosittionBoxMessage(received, size.Width, size.Height);
-            ItemChat item = new ItemChat(size, point, message, received);       
+            ItemChat item = new ItemChat(size, point, message, received);
             this.Controls.Add(item);
-            if (position_y >this.Height)
-            {
-                this.Height = position_y;
-            }
-            if (this.changeheightPanel!=null)
-            {
-                this.changeheightPanel();
-            }
-        }
-        public void addNewFile(string key,string path,bool received)
-        {
-            Size size = this.calcSizeBoxMensaje(path);
-            Point point = this.calcPosittionBoxMessage(received, size.Width, size.Height);
-            ItemChat item = new ItemChat(size, point, path, received,true);            
-            this.chatFileItems.Add(key,item);
-            if(this.add !=null)Invoke(this.add,item);
             if (position_y > this.Height)
             {
                 this.Height = position_y;
@@ -108,6 +100,31 @@ namespace MyComponets
             {
                 this.changeheightPanel();
             }
+        }
+        public void addNewMessage(string message, string title, bool received)
+        {
+            Invoke(this.actionAddMessage,message,title,received);
+        }
+        public void onAddNewFile(string key, string path, bool received)
+        {
+            Size size = this.calcSizeBoxMensaje(path);
+            Point point = this.calcPosittionBoxMessage(received, size.Width, size.Height);
+            ItemChat item = new ItemChat(size, point, path, received, true);
+            this.chatFileItems.Add(key, item);
+            if (this.add != null) Invoke(this.add, item);
+            if (position_y > this.Height)
+            {
+                this.Height = position_y;
+            }
+            if (this.changeheightPanel != null)
+            {
+                this.changeheightPanel();
+            }
+
+        }
+        public void addNewFile(string key,string path,bool received)
+        {
+            Invoke(this.actionAddNewFile, key,path, received);
         }
         public void addFile(ItemChat item)
         {
@@ -140,11 +157,11 @@ namespace MyComponets
                 this.Location = point;                
                 this.received = received;
                 this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                this.initializeComponents(path,received,true);
+                this.initializeComponents(path,received, file);
             }          
             public void updateProgress(float progress)
             {
-                float prog = ((int)(progress*100))/ 100;
+                double prog = ((int)(progress*100))/ 100.0;
                 if(this.progress!=null )this.progress.Text = (prog).ToString()+"%";
             }
             
@@ -153,16 +170,17 @@ namespace MyComponets
                 {
                     this.progress = new Label();
                     this.progress.Text = "0%";
+                    this.progress.AutoSize = true;
                 }
                 this.message = new Label();
                 this.message.Text = message;
                 this.message.Location = new Point(PADD_LBL_MENSAJE_X,PADD_LBL_MESSAGE_Y_TOP);               
                 this.message.Size =new Size(
-                    this.Size.Width-2*PADD_LBL_MENSAJE_X - (file?40:0),
+                    this.Size.Width-2*PADD_LBL_MENSAJE_X - (file?50:0),
                     this.Size.Height- PADD_LBL_MESSAGE_Y_TOP- PADD_LBL_MESSAGE_Y_BOTTOM);
                 this.message.AutoSize = false;
-                if (file)this.progress.Location = new Point(this.Size.Width -30, PADD_LBL_MESSAGE_Y_TOP);
-                this.progress.AutoSize = true;
+                if (file)this.progress.Location = new Point(this.Size.Width -40, PADD_LBL_MESSAGE_Y_TOP);
+               
                 if (received)
                 {
                     this.BackColor = Color.White;

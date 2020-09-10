@@ -74,7 +74,7 @@ namespace MySerialPortKS
         public bool Connect(){
             try{
                 serialPort = new SerialPort(portName, this.speedBaudios, Parity.Even, 8, StopBits.Two);              
-                serialPort.ReadBufferSize= 10470;
+                serialPort.ReadBufferSize= 10420;
                 serialPort.ReadTimeout = 500;
                 serialPort.WriteTimeout = 500;                                      
             }
@@ -123,31 +123,24 @@ namespace MySerialPortKS
         //Recopera la longitud del mensaje codificada en la cabecera de la trama
         private int recoveryNumberOfProgress()
         {
-            int start = Frame.FRAME_TYPE + Frame.FRAME_KEY + Frame.FRAME_EXTENSION + Frame.FRAME_LENGTH_DATA + Frame.FRAME_NUM_FRAMES;
+            int start = Frame.FRAME_TYPE + Frame.FRAME_KEY+ Frame.FRAME_LENGTH_DATA + Frame.FRAME_NUM_FRAMES;
             string lengthMessage = this.smsToRecieve.Substring(start, Frame.FRAME_NUMBER);
             return (int)Int64.Parse(lengthMessage);
         }
 
         private int recoveryNumberOfFrames()
         {
-            int start = Frame.FRAME_TYPE + Frame.FRAME_KEY + Frame.FRAME_EXTENSION + Frame.FRAME_LENGTH_DATA;
+            int start = Frame.FRAME_TYPE + Frame.FRAME_KEY + Frame.FRAME_LENGTH_DATA;
             string lengthMessage = this.smsToRecieve.Substring(start, Frame.FRAME_NUM_FRAMES);
             return (int)Int64.Parse(lengthMessage);
         }
 
         private int recoveryLengthMessageReceived()
         {
-            int start = Frame.FRAME_TYPE + Frame.FRAME_KEY + Frame.FRAME_EXTENSION;
+            int start = Frame.FRAME_TYPE + Frame.FRAME_KEY;
             string lengthMessage = this.smsToRecieve.Substring(start,Frame.FRAME_LENGTH_DATA);
             return (int)Int64.Parse(lengthMessage);
-        }       
-        private string recoveryFileExtension()
-        {
-            int start = Frame.FRAME_TYPE + Frame.FRAME_KEY;
-            string extension = this.smsToRecieve.Substring(start, Frame.FRAME_EXTENSION);
-            var output = Regex.Replace(extension, @"[\d-]", string.Empty);
-            return output.Trim();
-        }
+        }               
         private string recoveryFileKey()
         {
             int start = Frame.FRAME_TYPE;
@@ -237,8 +230,7 @@ namespace MySerialPortKS
                             this.dataFrame = new byte[Frame.FRAME_DATA];
                             Array.Copy(receivedMessage, Frame.getFrameHeadLength(), this.dataFrame, 0, Frame.FRAME_DATA);
                             int totalFrames = this.recoveryNumberOfFrames();
-                            int frameProgress = this.recoveryNumberOfProgress();
-                            string extencion = this.recoveryFileExtension();
+                            int frameProgress = this.recoveryNumberOfProgress();                            
                             string key = this.recoveryFileKey();
                             byte[] data = this.RecoveryBytesFromFrameData();
                             int lengthData = this.recoveryLengthMessageReceived();

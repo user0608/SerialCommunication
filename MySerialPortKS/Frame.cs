@@ -17,8 +17,7 @@ namespace MySerialPortKS
         public static int FRAME_DATA = 1024;
         public static int FRAME_NUMBER = 5;
         public static int FRAME_NUM_FRAMES = 5;
-        public static int FRAME_LENGTH_DATA = 4;
-        public static int FRAME_EXTENSION = 5;
+        public static int FRAME_LENGTH_DATA = 4;     
         public static int FRAME_KEY = 3;
         public static int FRAME_TYPE = 1;
 
@@ -40,15 +39,14 @@ namespace MySerialPortKS
             return(
                 FRAME_NUMBER +
                 FRAME_NUM_FRAMES +
-                FRAME_LENGTH_DATA +
-                FRAME_EXTENSION +
+                FRAME_LENGTH_DATA +           
                 FRAME_KEY +
                 FRAME_TYPE);
         }
 
         private byte[] convertStringToBytes(string data)
         {           
-            return ASCIIEncoding.UTF8.GetBytes(data);
+            return ASCIIEncoding.UTF8.GetBytes(data.Trim());
         }
 
         private void setFieldsHead(byte[] data,int lengthBackFields)
@@ -71,16 +69,10 @@ namespace MySerialPortKS
             
             int lengthBackFields = FRAME_TYPE + FRAME_KEY;
             this.setFieldsHead(key, lengthBackFields);
-
-            lengthBackFields += FRAME_EXTENSION;
-            this.setFieldsHead(extension, lengthBackFields);
-
             lengthBackFields+= FRAME_LENGTH_DATA;
             this.setFieldsHead(lengthData, lengthBackFields);
-
             lengthBackFields+= FRAME_NUM_FRAMES;
             this.setFieldsHead(numFrames, lengthBackFields);
-
             lengthBackFields+=FRAME_NUMBER;
             this.setFieldsHead(number, lengthBackFields);
         }

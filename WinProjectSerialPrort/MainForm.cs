@@ -185,7 +185,7 @@ namespace WinProjectSerialPrort
             try
             {
                 this.mySerialPort.SendMessage(message);               
-                this.myChatPanel.addNewMessage(message, "Me", false);              
+                this.myChatPanel.addNewMessage(message, "Me", true );              
             }
             catch
             {

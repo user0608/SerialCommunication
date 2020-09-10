@@ -13,8 +13,7 @@ namespace MySerialPortKS
         public static int READ_MODE = 2943;
         public static int WRITE_MODE = 3432;
 
-        public static int TAM_DATA = 1024;
-
+        public static int TAM_DATA = Frame.FRAME_DATA;
         private string path;
         private string name;
         private string extension;
@@ -62,9 +61,10 @@ namespace MySerialPortKS
             {
                 if (this.progress==-1)
                 {
+                   
                     byte[] data = ASCIIEncoding.UTF8.GetBytes(this.GetFileName());
                     this.progress++;
-                    return new FileResponse(data,data.Length,false);
+                    return new FileResponse(data, this.GetFileName().Length, false);
 
                 }else
                 {

@@ -68,8 +68,7 @@ namespace MySerialPortKS
         public byte[] getTrama()
         {
             if (this.file)
-            {
-              
+            {              
                 float numFrames = (UInt64)(fileToSend.GetNumBytes()+1023) / 1024;
                 this.response = this.fileToSend.Read();
                 this.trama.SetFrame(
