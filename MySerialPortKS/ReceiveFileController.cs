@@ -17,6 +17,8 @@ namespace MySerialPortKS
         }
         public void InitFileStream(string path,string key)
         {
+            if (this.filesToWrite.ContainsKey(key))
+                this.filesToWrite.Remove(key);
             KFile file = KFile.NewKFile(path, KFile.WRITE_MODE);
             this.filesToWrite.Add(key, file);
         }
@@ -37,6 +39,15 @@ namespace MySerialPortKS
             {
                 throw new Exception(ex.Message + " - no stream");
             }
+        }
+
+        public void CloseSession()
+        {
+          foreach(KFile file in filesToWrite.Values)
+            {
+                file.Close();
+            }
+          this.filesToWrite.Clear();
         }
     }
 }

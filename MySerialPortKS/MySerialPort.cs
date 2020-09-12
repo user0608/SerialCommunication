@@ -16,7 +16,8 @@ namespace MySerialPortKS
         private const int BAUDIOS = 57600;
         private SerialPort serialPort;
         private int speedBaudios;
-        private string portName;    
+        private string portName;
+        private string folderReceivePath;
                 
         private Thread receiveMessageThread;
         private bool statusThreadReceiveMessage;
@@ -43,11 +44,10 @@ namespace MySerialPortKS
         private SentFileController mysentFileController;
         private ReceiveFileController myReceiveFileController;
 
-        public MySerialPort(string portName)
-        {
-            
-            
+        public MySerialPort(string portName,string folder_receivePath)
+        {                        
             this.portName = portName;
+            this.folderReceivePath = folder_receivePath;
             this.myReceiveFileController = new ReceiveFileController();
             this.mysentFileController = new SentFileController(this.portName);
             this.mysentFileController.frameToSend += new SentFileController.EncodedTrame(frameReadyToSend);
@@ -55,9 +55,9 @@ namespace MySerialPortKS
             this.mysentFileController.notifyFile += new SentFileController.HandlerNotifyFileProgress(this.notifyFileName);
             try
             {
-                if (!(Directory.Exists(@".\Received_file_" + this.portName)))
+                if (!(Directory.Exists(this.folderReceivePath + @"\Received_file_" + this.portName)))
                 {
-                    Directory.CreateDirectory(@".\Received_file_" + this.portName);
+                    Directory.CreateDirectory(this.folderReceivePath + @"\Received_file_" + this.portName);
                 }
             }
             catch (Exception ee)
@@ -66,7 +66,8 @@ namespace MySerialPortKS
             }
 
         }
-        public MySerialPort(string portName,int speedBaudios):this(portName)
+        public MySerialPort(string portName,int speedBaudios, string folder_receivePath)
+            :this(portName, folder_receivePath)
         {
             this.speedBaudios = speedBaudios;
             
@@ -104,7 +105,8 @@ namespace MySerialPortKS
             try{
                 this.processeThreadBuffer = false;
                 this.statusThreadReceiveMessage = false;
-                this.mysentFileController.Close();                
+                this.mysentFileController.Close();
+                this.myReceiveFileController.CloseSession();
                 serialPort.Close();
                 return true;
             }catch{
@@ -201,8 +203,11 @@ namespace MySerialPortKS
         } 
         public void isBufferReady()
         {
-            this.bufferStatus = this.serialPort.BytesToWrite == 0;
-            Thread.Sleep(5);
+            while (processeThreadBuffer)
+            {
+                this.bufferStatus = this.serialPort.BytesToWrite == 0;
+                Thread.Sleep(5);
+            }
         }
     
        
@@ -215,6 +220,7 @@ namespace MySerialPortKS
                 try
                 {
                     Thread.Sleep(1);
+                    if (!serialPort.IsOpen) return;
                     if (serialPort.BytesToRead>0)
                     {
                         byte[] receivedMessage = new byte[Frame.getFrameLength()];
@@ -237,7 +243,7 @@ namespace MySerialPortKS
                             if (frameProgress == 0)
                             {
                                 string name = this.RecoveryFrameData();
-                                string nameFile = @".\Received_file_" + this.portName + "\\" + name.Trim();
+                                string nameFile = this.folderReceivePath+@"\Received_file_" + this.portName + "\\" + name.Trim();
                                 this.myReceiveFileController.InitFileStream(nameFile, key);
                                 if (this.tramaHire != null) this.tramaHire(name,key, frameProgress, totalFrames);
                             }
@@ -268,7 +274,8 @@ namespace MySerialPortKS
                 Monitor.Enter(serialPort,ref _lockTeken);
                 try { 
                     while (!this.bufferStatus) { }
-                    serialPort.Write(frame, 0, Frame.getFrameLength());
+                    if(serialPort.IsOpen)
+                      serialPort.Write(frame, 0, Frame.getFrameLength());
                 }
                 finally {
                     if (_lockTeken)
@@ -279,7 +286,7 @@ namespace MySerialPortKS
             }
             catch
             {                
-                throw new Exception("Error to write message");
+                //throw new Exception("Error to write message");
             }
          
         }

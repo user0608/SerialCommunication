@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace WinProjectSerialPrort.Components
 {
@@ -49,7 +50,9 @@ namespace WinProjectSerialPrort.Components
             this.openFileDialog = new OpenFileDialog();
             this.openFileDialog.InitialDirectory = @".\";
             this.openFileDialog.Multiselect = true;
-            this.openFileDialog.Filter ="All files (*.*)|*.*";
+            this.openFileDialog.RestoreDirectory = true;
+            this.openFileDialog.Filter ="All files (*.*)|*.*";        
+            
             this.openFileDialog.Title = "Select some files";
 
 
@@ -57,7 +60,7 @@ namespace WinProjectSerialPrort.Components
             this.filePaths = new List<string>();
             this.message = "";
             this.ComponentesState(false);
-            this.AllowDrop = true;
+            
             this.myDataGridView.AllowDrop = true;
             this.txtMessage.Visible = true;
             this.myDataGridView.Visible = false;
@@ -68,6 +71,7 @@ namespace WinProjectSerialPrort.Components
             this.btnSend.Enabled = state;
             this.txtMessage.Enabled = state;
             this.txtMessage.Text = "";
+            this.AllowDrop = state;
         }
         private void addFilePads(string[] paths)
         {
@@ -123,7 +127,7 @@ namespace WinProjectSerialPrort.Components
 
         private void txtMessage_KeyPress(object sender, KeyPressEventArgs e)
         {
-           
+            if ((int)e.KeyChar == (int)Keys.Delete){if(this.txtMessage.Text=="")this.resetDefault();}
         }
 
         private void txtMessage_KeyUp(object sender, KeyEventArgs e)
@@ -164,7 +168,24 @@ namespace WinProjectSerialPrort.Components
         private void InputBox_DragDrop(object sender, DragEventArgs e)
         {
             string[] filesList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            this.addFilePads(filesList);           
+            List<string> validPathList = new List<string>();
+            try
+            {
+                foreach (string path in filesList)
+                {
+                    if (!File.Exists(path))
+                    {
+                        MessageBox.Show(this, path + " is not a valid file", "Error");                        
+                        return;
+                    }
+                    validPathList.Add(path);
+                }
+            }
+            catch
+            {
+                MessageBox.Show(this, "Something wrong happened with the file paths check", "Error");
+            }                      
+            this.addFilePads(validPathList.ToArray());            
         }
 
         private void InputBox_DragEnter(object sender, DragEventArgs e)
@@ -190,6 +211,11 @@ namespace WinProjectSerialPrort.Components
         private void InputBox_DragOver(object sender, DragEventArgs e)
         {
            if(filePaths.Count==0) dragOverComponent(true);
+        }
+
+        private void myDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

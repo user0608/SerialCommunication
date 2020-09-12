@@ -32,17 +32,22 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.txtPortName = new System.Windows.Forms.ComboBox();
             this.lblName = new System.Windows.Forms.Label();
-            this.txtRatioBaudios = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.contentChatPanelMain = new System.Windows.Forms.Panel();
+            this.txtRatioBaudios = new System.Windows.Forms.ComboBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtSetting = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblState
             // 
             this.lblState.AutoSize = true;
             this.lblState.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lblState.Location = new System.Drawing.Point(483, 9);
+            this.lblState.Location = new System.Drawing.Point(391, 0);
             this.lblState.Name = "lblState";
             this.lblState.Size = new System.Drawing.Size(38, 13);
             this.lblState.TabIndex = 3;
@@ -50,7 +55,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(480, 30);
+            this.btnConnect.Location = new System.Drawing.Point(464, 27);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(100, 24);
             this.btnConnect.TabIndex = 4;
@@ -69,37 +74,30 @@
             "COM5",
             "COM6",
             "COM7",
-            "COM9",
+            "COM8",
             "COM9"});
-            this.txtPortName.Location = new System.Drawing.Point(256, 32);
+            this.txtPortName.Location = new System.Drawing.Point(215, 28);
             this.txtPortName.Name = "txtPortName";
             this.txtPortName.Size = new System.Drawing.Size(100, 21);
             this.txtPortName.TabIndex = 5;
+            this.txtPortName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox_KeyDown);
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            this.lblName.Location = new System.Drawing.Point(40, 18);
+            this.lblName.Location = new System.Drawing.Point(67, 20);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(114, 31);
             this.lblName.TabIndex = 6;
             this.lblName.Text = "SPChat";
             // 
-            // txtRatioBaudios
-            // 
-            this.txtRatioBaudios.Location = new System.Drawing.Point(368, 32);
-            this.txtRatioBaudios.Name = "txtRatioBaudios";
-            this.txtRatioBaudios.Size = new System.Drawing.Size(100, 20);
-            this.txtRatioBaudios.TabIndex = 8;
-            this.txtRatioBaudios.Text = "57600";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(257, 10);
+            this.label3.Location = new System.Drawing.Point(216, 6);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 15);
             this.label3.TabIndex = 10;
@@ -109,7 +107,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(368, 10);
+            this.label4.Location = new System.Drawing.Point(323, 7);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(36, 15);
             this.label4.TabIndex = 11;
@@ -123,24 +121,83 @@
             this.contentChatPanelMain.Size = new System.Drawing.Size(540, 252);
             this.contentChatPanelMain.TabIndex = 12;
             // 
+            // txtRatioBaudios
+            // 
+            this.txtRatioBaudios.FormattingEnabled = true;
+            this.txtRatioBaudios.Items.AddRange(new object[] {
+            "7200",
+            "9600",
+            "14400",
+            "19200",
+            "28800",
+            "38400",
+            "57600",
+            "115200",
+            "230400",
+            "250000",
+            "256000"});
+            this.txtRatioBaudios.Location = new System.Drawing.Point(321, 28);
+            this.txtRatioBaudios.Name = "txtRatioBaudios";
+            this.txtRatioBaudios.Size = new System.Drawing.Size(137, 21);
+            this.txtRatioBaudios.TabIndex = 0;
+            this.txtRatioBaudios.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox_KeyDown);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(611, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menu";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.txtSetting,
+            this.aboutToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // txtSetting
+            // 
+            this.txtSetting.Name = "txtSetting";
+            this.txtSetting.Size = new System.Drawing.Size(180, 22);
+            this.txtSetting.Text = "Settings";
+            this.txtSetting.Click += new System.EventHandler(this.folderReceiveToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(611, 435);
+            this.Controls.Add(this.txtRatioBaudios);
             this.Controls.Add(this.contentChatPanelMain);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtRatioBaudios);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.txtPortName);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.lblState);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "WinChat";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,10 +208,14 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.ComboBox txtPortName;
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox txtRatioBaudios;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel contentChatPanelMain;
+        private System.Windows.Forms.ComboBox txtRatioBaudios;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem txtSetting;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

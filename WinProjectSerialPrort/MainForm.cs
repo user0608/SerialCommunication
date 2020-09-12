@@ -17,23 +17,26 @@ namespace WinProjectSerialPrort
     {
         private MySerialPort mySerialPort;
         private string portname;
+        private string receivePath;
+        private Options optionsForm;
        // private int speedBaudios;
         private ChatPanel myChatPanel;
         private InputBox myInputBox;
+        
 
         private List<String> listPathFiles;
-
         public delegate void HandlerReceivedMessage(string message);
         HandlerReceivedMessage loadMessageReived;
         public delegate void HandelerUpdateScroll();
         private HandelerUpdateScroll onUpdateScorll;
-
+        
         public MainForm()
         {
             InitializeComponent();
             this.listPathFiles = new List<string>();
             this.loadMessageReived = new HandlerReceivedMessage(loadMessage);            
-            this.txtPortName.SelectedIndex = 0;
+            this.txtPortName.SelectedIndex = 0;                        
+            this.txtRatioBaudios.SelectedIndex = 6;
             this.myChatPanel = new ChatPanel(this.contentChatPanelMain.Width, this.contentChatPanelMain.Height, 0, 0);
             this.contentChatPanelMain.Controls.Clear();
             this.contentChatPanelMain.Controls.Add(this.myChatPanel);
@@ -48,6 +51,9 @@ namespace WinProjectSerialPrort
             this.MaximizeBox = false;
             this.MaximumSize = this.Size;
             this.MinimumSize = this.Size;
+            this.optionsForm = new Options();
+            this.optionsForm.handlerTxtPath += new Options.HandelrtextBoxPath(this.updateFolderPath);
+            this.receivePath = this.optionsForm.getFolderPath();
         }
 
         private int getRatio()
@@ -58,15 +64,19 @@ namespace WinProjectSerialPrort
             }catch
             {
                 MessageBox.Show("Ratio baudios invalid");
-                this.txtRatioBaudios.Text = "57600";
+                this.txtRatioBaudios.SelectedIndex = 6;
                 return 57600;
             }
+        }
+        private void updateFolderPath(string path)
+        {
+            this.receivePath = path;
         }
                
         private void Connect()
         {
             this.portname = txtPortName.Text;                
-            this.mySerialPort = new MySerialPort(this.portname, getRatio());
+            this.mySerialPort = new MySerialPort(this.portname, getRatio(),this.receivePath);
             this.mySerialPort.messageIsHere += new MySerialPort.HandlerReceiveMessage(this.messageReceived);
             this.mySerialPort.tramaHire += new MySerialPort.HandlerNotifyProgress(this.onTramaHire);
             this.mySerialPort.notifyName += new MySerialPort.HandlerNotifyProgress(this.onFileNameAddToCahtPanel);
@@ -79,8 +89,11 @@ namespace WinProjectSerialPrort
                 this.lblState.ForeColor = Color.Green;
                 this.btnConnect.Text = "Disconnect";
                 this.myInputBox.ComponentesState(true);         
-                    this.txtPortName.Enabled = false;
-            }else            
+                this.txtPortName.Enabled = false;
+                this.txtRatioBaudios.Enabled = false;
+                this.txtSetting.Enabled = false;
+                }
+                else            
             {
                 this.lblState.Text = "OfLine";
                 this.lblState.ForeColor = Color.Red;
@@ -102,6 +115,8 @@ namespace WinProjectSerialPrort
                 this.lblState.ForeColor = Color.Red;
                 this.btnConnect.Text = "Connect";
                 this.txtPortName.Enabled = true;
+                this.txtRatioBaudios.Enabled = true;
+                this.txtSetting.Enabled = true;
                 this.myInputBox.ComponentesState(false);
             }
             else
@@ -149,12 +164,12 @@ namespace WinProjectSerialPrort
         }
         private void loadMessage(string message)
         {
-            this.myChatPanel.addNewMessage(message, "Received", false);                        
+            this.myChatPanel.addNewMessage(message, "Received", true);                        
 
         }
         private void onFileNameAddToCahtPanel(string path, string key, float progress, float tramas)
         {
-            this.myChatPanel.addNewFile(key, path, true);
+            this.myChatPanel.addNewFile(key, path, false);
         }
         private void upadateProgressOnChatPanel(string path, string key, float progress, float tramas)
         {
@@ -169,7 +184,7 @@ namespace WinProjectSerialPrort
             }
             else
             {
-                this.myChatPanel.addNewFile(key,path,false);
+                this.myChatPanel.addNewFile(key,path,true);
             }           
         }
 
@@ -185,7 +200,7 @@ namespace WinProjectSerialPrort
             try
             {
                 this.mySerialPort.SendMessage(message);               
-                this.myChatPanel.addNewMessage(message, "Me", true );              
+                this.myChatPanel.addNewMessage(message, "Me", false );              
             }
             catch
             {
@@ -206,6 +221,21 @@ namespace WinProjectSerialPrort
         int i = 0;
         private void button1_Click(object sender, EventArgs e)
         {           
+        }
+        private void comboBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // comboBox1 is readonly
+            e.SuppressKeyPress = true;
+        }
+
+        private void folderReceiveToolStripMenuItem_Click(object sender, EventArgs e)
+        {                      
+            this.optionsForm.ShowDialog();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this, "This project was developed by students from National university of Trujillo.", "UNT");
         }
     }
 }

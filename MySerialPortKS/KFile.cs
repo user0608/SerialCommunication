@@ -43,8 +43,24 @@ namespace MySerialPortKS
             }
             if (KFile.WRITE_MODE == mode)
             {
-                file.myStream = new FileStream(path, FileMode.Create, FileAccess.Write);
-                file.myWriter = new BinaryWriter(file.myStream);
+                try
+                {
+                    file.myStream = new FileStream(path, FileMode.Create, FileAccess.Write);
+                    file.myWriter = new BinaryWriter(file.myStream);
+                }
+                catch
+                {
+                    string newpath = path;
+                    string ext = Path.GetExtension(newpath);
+                    int i = 1;
+                    while (File.Exists(newpath))
+                    {
+                        newpath = newpath.Insert(newpath.Length - ext.Length, i.ToString());
+                        i++;
+                    }
+                    file.myStream = new FileStream(newpath,FileMode.Create, FileAccess.Write);
+                    file.myWriter = new BinaryWriter(file.myStream);
+                }
             }
             return file;
         }     

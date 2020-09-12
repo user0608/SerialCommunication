@@ -107,6 +107,9 @@ namespace MyComponets
         }
         public void onAddNewFile(string key, string path, bool received)
         {
+            if (this.chatFileItems.ContainsKey(key))
+                this.chatFileItems.Remove(key);
+            
             Size size = this.calcSizeBoxMensaje(path);
             Point point = this.calcPosittionBoxMessage(received, size.Width, size.Height);
             ItemChat item = new ItemChat(size, point, path, received, true);
@@ -162,7 +165,17 @@ namespace MyComponets
             public void updateProgress(float progress)
             {
                 double prog = ((int)(progress*100))/ 100.0;
-                if(this.progress!=null )this.progress.Text = (prog).ToString()+"%";
+                if (this.progress != null)
+                {
+                    string txt= (prog).ToString() + "%";
+                    if (progress == 100.00)
+                    {
+                        txt = "OK";
+                        this.progress.ForeColor = ((received)?Color.White: Color.Green);
+                        this.progress.BackColor = ((received) ?  Color.Green: Color.White );
+                    }
+                    this.progress.Text = txt;
+                }
             }
             
             private void initializeComponents(string message,bool received,bool file)
@@ -176,10 +189,10 @@ namespace MyComponets
                 this.message.Text = message;
                 this.message.Location = new Point(PADD_LBL_MENSAJE_X,PADD_LBL_MESSAGE_Y_TOP);               
                 this.message.Size =new Size(
-                    this.Size.Width-2*PADD_LBL_MENSAJE_X - (file?50:0),
+                    this.Size.Width-2*PADD_LBL_MENSAJE_X - (file?60:0),
                     this.Size.Height- PADD_LBL_MESSAGE_Y_TOP- PADD_LBL_MESSAGE_Y_BOTTOM);
                 this.message.AutoSize = false;
-                if (file)this.progress.Location = new Point(this.Size.Width -40, PADD_LBL_MESSAGE_Y_TOP);
+                if (file)this.progress.Location = new Point(this.Size.Width -50, PADD_LBL_MESSAGE_Y_TOP);
                
                 if (received)
                 {

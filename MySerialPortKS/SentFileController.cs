@@ -124,9 +124,21 @@ namespace MySerialPortKS
         public void setStateBuffer(bool state) {
             this.bufferIsEmpty = state;
         }
-        public void Close()
+        public async void Close()
         {
             this.processState = false;
+            await Task.Run(() => processesSend.Join());
+            foreach (Resource r in this.processingResource)
+            {
+                r.CloseStream();
+            }
+            foreach (Resource r in this.storeResource)
+            {
+                r.CloseStream();
+            }
+            this.processingResource.Clear();
+            this.storeResource.Clear();
+
         }
 
     }

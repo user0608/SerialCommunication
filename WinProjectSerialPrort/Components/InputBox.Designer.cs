@@ -79,6 +79,7 @@
             this.myDataGridView.Name = "myDataGridView";
             this.myDataGridView.Size = new System.Drawing.Size(440, 91);
             this.myDataGridView.TabIndex = 3;
+            this.myDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.myDataGridView_CellContentClick);
             this.myDataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.InputBox_DragDrop);
             this.myDataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.InputBox_DragEnter);
             this.myDataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.InputBox_DragOver);
