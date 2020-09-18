@@ -54,7 +54,7 @@ namespace MyComponets
             this.height_panel = height;
             this.MinimumSize = new Size(width, height);
             this.Location = new Point(x, y);
-            this.BorderStyle= System.Windows.Forms.BorderStyle.Fixed3D;
+            this.BorderStyle= System.Windows.Forms.BorderStyle.None;
             this.position_y = 9;
             this.position_x = 10;
             this.update += new HandlerUpdate(this.up);
@@ -159,7 +159,8 @@ namespace MyComponets
                 this.Size = sise;
                 this.Location = point;                
                 this.received = received;
-                this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                this.BorderStyle = System.Windows.Forms.BorderStyle.None;
+                //this.Margin.All = ;
                 this.initializeComponents(path,received, file);
             }          
             public void updateProgress(float progress)
@@ -171,8 +172,8 @@ namespace MyComponets
                     if (progress == 100.00)
                     {
                         txt = "OK";
-                        this.progress.ForeColor = ((received)?Color.White: Color.Green);
-                        this.progress.BackColor = ((received) ?  Color.Green: Color.White );
+                        this.progress.ForeColor = ((received)?Color.FromArgb(92, 91, 91): Color.FromArgb(210, 250, 250));
+                        this.progress.BackColor = ((received) ?  Color.FromArgb(253, 253, 253) : Color.FromArgb(8, 8, 8));
                     }
                     this.progress.Text = txt;
                 }
@@ -196,13 +197,13 @@ namespace MyComponets
                
                 if (received)
                 {
-                    this.BackColor = Color.White;
+                    this.BackColor = Color.FromArgb(210,250,250);
                 }
                 else
                 {
-                    this.BackColor = Color.Teal;
-                    this.ForeColor = Color.White;                   
-                    this.message.ForeColor = Color.White;
+                    this.BackColor = Color.FromArgb(8, 8, 8);
+                    this.ForeColor = Color.FromArgb(253, 253, 253);
+                    this.message.ForeColor = Color.FromArgb(253, 253, 253);
                 }
                 this.Controls.Add(this.message);
                 if(file)this.Controls.Add(this.progress);

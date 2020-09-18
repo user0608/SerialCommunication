@@ -235,7 +235,22 @@ namespace WinProjectSerialPrort
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(this, "This project was developed by students from National university of Trujillo.", "UNT");
+            MessageBox.Show(this, "This project was developed by students from National university of Trujillo. \n\nDeveloped in Visual C#, for point-to-point communication between two PCs.", "UNT");
+        }
+
+        private void txtPortName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void lblName_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.lblState = new System.Windows.Forms.Label();
             this.btnConnect = new System.Windows.Forms.Button();
             this.txtPortName = new System.Windows.Forms.ComboBox();
@@ -47,7 +48,7 @@
             // 
             this.lblState.AutoSize = true;
             this.lblState.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lblState.Location = new System.Drawing.Point(391, 0);
+            this.lblState.Location = new System.Drawing.Point(420, 7);
             this.lblState.Name = "lblState";
             this.lblState.Size = new System.Drawing.Size(38, 13);
             this.lblState.TabIndex = 3;
@@ -55,12 +56,16 @@
             // 
             // btnConnect
             // 
+            this.btnConnect.BackColor = System.Drawing.Color.Black;
+            this.btnConnect.FlatAppearance.BorderSize = 0;
+            this.btnConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConnect.ForeColor = System.Drawing.Color.White;
             this.btnConnect.Location = new System.Drawing.Point(464, 27);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(100, 24);
+            this.btnConnect.Size = new System.Drawing.Size(116, 24);
             this.btnConnect.TabIndex = 4;
             this.btnConnect.Text = "Connect";
-            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.UseVisualStyleBackColor = false;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // txtPortName
@@ -77,21 +82,26 @@
             "COM8",
             "COM9"});
             this.txtPortName.Location = new System.Drawing.Point(215, 28);
+            this.txtPortName.Margin = new System.Windows.Forms.Padding(0);
             this.txtPortName.Name = "txtPortName";
             this.txtPortName.Size = new System.Drawing.Size(100, 21);
             this.txtPortName.TabIndex = 5;
+            this.txtPortName.SelectedIndexChanged += new System.EventHandler(this.txtPortName_SelectedIndexChanged);
             this.txtPortName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox_KeyDown);
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            this.lblName.Location = new System.Drawing.Point(67, 20);
+            this.lblName.BackColor = System.Drawing.Color.Transparent;
+            this.lblName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(8)))), ((int)(((byte)(8)))));
+            this.lblName.Location = new System.Drawing.Point(35, 19);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(114, 31);
+            this.lblName.Size = new System.Drawing.Size(100, 29);
             this.lblName.TabIndex = 6;
             this.lblName.Text = "SPChat";
+            this.lblName.Click += new System.EventHandler(this.lblName_Click);
             // 
             // label3
             // 
@@ -115,7 +125,8 @@
             // 
             // contentChatPanelMain
             // 
-            this.contentChatPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(232)))), ((int)(((byte)(237)))));
+            this.contentChatPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(253)))), ((int)(((byte)(253)))));
+            this.contentChatPanelMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.contentChatPanelMain.Location = new System.Drawing.Point(40, 65);
             this.contentChatPanelMain.Name = "contentChatPanelMain";
             this.contentChatPanelMain.Size = new System.Drawing.Size(540, 252);
@@ -137,6 +148,7 @@
             "250000",
             "256000"});
             this.txtRatioBaudios.Location = new System.Drawing.Point(321, 28);
+            this.txtRatioBaudios.Margin = new System.Windows.Forms.Padding(0);
             this.txtRatioBaudios.Name = "txtRatioBaudios";
             this.txtRatioBaudios.Size = new System.Drawing.Size(137, 21);
             this.txtRatioBaudios.TabIndex = 0;
@@ -152,6 +164,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(611, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menu";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // optionsToolStripMenuItem
             // 
@@ -191,6 +204,7 @@
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.lblState);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "WinChat";

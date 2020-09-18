@@ -3,3 +3,9 @@ C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\bin\Debug\MySeri
 C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\obj\Debug\MySerialPortKS.csproj.CoreCompileInputs.cache
 C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\obj\Debug\MySerialPortKS.dll
 C:\Users\User0\source\repos\WinProjectSerialPort\MySerialPortKS\obj\Debug\MySerialPortKS.pdb
+C:\unt\comunicacion de datos\SerialCommunication\MySerialPortKS\bin\Debug\MySerialPortKS.dll
+C:\unt\comunicacion de datos\SerialCommunication\MySerialPortKS\bin\Debug\MySerialPortKS.pdb
+C:\unt\comunicacion de datos\SerialCommunication\MySerialPortKS\obj\Debug\MySerialPortKS.csprojAssemblyReference.cache
+C:\unt\comunicacion de datos\SerialCommunication\MySerialPortKS\obj\Debug\MySerialPortKS.csproj.CoreCompileInputs.cache
+C:\unt\comunicacion de datos\SerialCommunication\MySerialPortKS\obj\Debug\MySerialPortKS.dll
+C:\unt\comunicacion de datos\SerialCommunication\MySerialPortKS\obj\Debug\MySerialPortKS.pdb

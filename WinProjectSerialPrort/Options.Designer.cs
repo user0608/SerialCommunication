@@ -37,22 +37,30 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(8)))), ((int)(((byte)(8)))));
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(253)))), ((int)(((byte)(253)))));
             this.btnCancel.Location = new System.Drawing.Point(276, 87);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 0;
             this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOK
             // 
+            this.btnOK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(8)))), ((int)(((byte)(8)))));
+            this.btnOK.FlatAppearance.BorderSize = 0;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(253)))), ((int)(((byte)(253)))));
             this.btnOK.Location = new System.Drawing.Point(372, 87);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "Apply";
-            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // txtPath
@@ -64,8 +72,10 @@
             // 
             // btnTry
             // 
-            this.btnTry.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnTry.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnTry.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(8)))), ((int)(((byte)(8)))));
+            this.btnTry.FlatAppearance.BorderSize = 0;
+            this.btnTry.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(253)))), ((int)(((byte)(253)))));
             this.btnTry.Location = new System.Drawing.Point(28, 87);
             this.btnTry.Name = "btnTry";
             this.btnTry.Size = new System.Drawing.Size(75, 23);
@@ -76,18 +86,23 @@
             // 
             // btnChange
             // 
-            this.btnChange.Location = new System.Drawing.Point(372, 27);
+            this.btnChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(8)))), ((int)(((byte)(8)))));
+            this.btnChange.FlatAppearance.BorderSize = 0;
+            this.btnChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(253)))), ((int)(((byte)(253)))));
+            this.btnChange.Location = new System.Drawing.Point(372, 24);
             this.btnChange.Name = "btnChange";
             this.btnChange.Size = new System.Drawing.Size(75, 23);
             this.btnChange.TabIndex = 4;
             this.btnChange.Text = "Change";
-            this.btnChange.UseVisualStyleBackColor = true;
+            this.btnChange.UseVisualStyleBackColor = false;
             this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(253)))), ((int)(((byte)(253)))));
             this.ClientSize = new System.Drawing.Size(476, 144);
             this.Controls.Add(this.btnChange);
             this.Controls.Add(this.btnTry);

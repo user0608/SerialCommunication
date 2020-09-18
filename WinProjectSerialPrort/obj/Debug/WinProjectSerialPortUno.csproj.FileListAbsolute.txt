@@ -23,3 +23,18 @@ C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug
 C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.CopyComplete
 C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.exe
 C:\Users\User0\source\repos\WinProjectSerialPort\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.pdb
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.exe.config
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.exe
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\bin\Debug\WinProjectSerialPrort.pdb
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\bin\Debug\MySerialPortKS.dll
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\bin\Debug\MySerialPortKS.pdb
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csprojAssemblyReference.cache
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.Components.InputBox.resources
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.MainForm.resources
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.Options.resources
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.Properties.Resources.resources
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.GenerateResource.cache
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.CoreCompileInputs.cache
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPortUno.csproj.CopyComplete
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.exe
+C:\unt\comunicacion de datos\SerialCommunication\WinProjectSerialPrort\obj\Debug\WinProjectSerialPrort.pdb

@@ -1,8 +1,9 @@
-# Factores
-Esta herramienta fue desarrollada para el curso de Ingeniería Económica y Financiera en la Universidad Nacional de Trujillo,  para facilitar el calculo de factores de pago en el desarrollo de ejercicio. 
-
-![imagen de la interface de programa](./png/captura.png "Software")
+# Serial port chat
+This is a project developed by the systems engineering students of the National University of Trujillo.
+Developed in Visual C# , for point-to-point communication between two PCs. 
 
 Formulas que son calculadas por el Software
-![imagen de la interface de programa](./png/Tabla1.png "Formulas implementadas")
-![imagen de la interface de programa](./png/Tabla2.png "Formulas implementadas")
+![imagen de la interface de programa](https://ibb.co/ZgtkXnN "Chat")
+
+![imagen de la interface de programa](https://ibb.co/BccZG95 "Connection to a port")
+![imagen de la interface de programa](https://ibb.co/N9hkMS0 "select a file")
