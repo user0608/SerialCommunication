@@ -2,5 +2,5 @@ Esta es una aplicación desarrollada en el curso de comunicación de datos, univ
 
 ## Descripción
 La aplicación permite comunicarse a través del envío de mensajes y archivos empleando los puertos de comunicación serial. 
-
-![Interface de programa](./capturas/app.png "Formulas implementadas")
+-Permite seleccionar la velocidad en baudios y el puerto por el que se va a comunicar.
+![Interface de programa](./Capturas/app.png "Interface grafica")
