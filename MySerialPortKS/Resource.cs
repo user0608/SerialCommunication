@@ -10,18 +10,15 @@ namespace MySerialPortKS
     {
         private bool file;
         private string message;
+
         public delegate void HandlerNotifyProgress(string key,float totalFrame,float progress);
         public HandlerNotifyProgress notifyProgress;
 
-        private KFile fileToSend;
+        private KFile fileToSend;  
         private KFile.FileResponse response;
-
 
         private int key;        
         private Frame trama;
-
-        
-        
 
         public Resource(bool file)
         {

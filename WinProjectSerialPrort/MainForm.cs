@@ -146,18 +146,6 @@ namespace WinProjectSerialPrort
             }
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-
-
-            if (this.listPathFiles.Count != 0)
-            {
-                this.mySerialPort.SendFiles(this.listPathFiles);
-            }
-            this.listPathFiles.Clear();
-           
-
-        }
      
         private void messageReceived(object oo, string message){           
             this.Invoke(this.loadMessageReived, message);         

@@ -64,7 +64,6 @@ namespace MySerialPortKS
             {
                 throw ee;
             }
-
         }
         public MySerialPort(string portName,int speedBaudios, string folder_receivePath)
             :this(portName, folder_receivePath)
@@ -163,7 +162,9 @@ namespace MySerialPortKS
             return this.smsToRecieve.Substring(Frame.getFrameHeadLength(),recoveryLengthMessageReceived());
         }
         
-
+        ///--------------------------------------------------------------------------------------------------
+        ///
+        ///--------------------------------------------------------------------------------------------------
 
         //Ejecuta el el procedimiento messageIsHire, que se encuentra un nivel por encima.
         //Es controlado por el hander de la clase.

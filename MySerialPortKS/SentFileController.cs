@@ -60,6 +60,7 @@ namespace MySerialPortKS
             if (this.indexCounter >= 999)
                 this.indexCounter = 100;
             f.notifyProgress += new Resource.HandlerNotifyProgress(this.notifyProgress);
+           
             Boolean _lockTeken = false;
             Monitor.Enter(storeResource, ref _lockTeken);
             try
@@ -121,9 +122,7 @@ namespace MySerialPortKS
                 }
             }
         }
-        public void setStateBuffer(bool state) {
-            this.bufferIsEmpty = state;
-        }
+        
         public async void Close()
         {
             this.processState = false;

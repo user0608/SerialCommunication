@@ -105,7 +105,7 @@ namespace MyComponets
         {
             Invoke(this.actionAddMessage,message,title,received);
         }
-        public void onAddNewFile(string key, string path, bool received)
+        private void onAddNewFile(string key, string path, bool received)
         {
             if (this.chatFileItems.ContainsKey(key))
                 this.chatFileItems.Remove(key);
@@ -123,7 +123,6 @@ namespace MyComponets
             {
                 this.changeheightPanel();
             }
-
         }
         public void addNewFile(string key,string path,bool received)
         {
@@ -137,7 +136,7 @@ namespace MyComponets
         {
             Invoke(this.update, key, progress);
         }
-        public void up(string key,float progress)
+        private void up(string key,float progress)
         {
             if (this.chatFileItems != null) this.chatFileItems[key].updateProgress(progress);
         }

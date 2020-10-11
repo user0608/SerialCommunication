@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace MySerialPortKS
 {
     class ReceiveFileController
-    {
-        //private List<KFile> filesToWrite;
+    {        
         private Dictionary<string, KFile> filesToWrite;
 
         public ReceiveFileController()
@@ -44,9 +43,9 @@ namespace MySerialPortKS
         public void CloseSession()
         {
           foreach(KFile file in filesToWrite.Values)
-            {
+          {
                 file.Close();
-            }
+          }
           this.filesToWrite.Clear();
         }
     }

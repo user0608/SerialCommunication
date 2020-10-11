@@ -12,8 +12,7 @@ namespace MySerialPortKS
         public static byte TYPE_MESSAGE = 109;
         public static byte TYPE_FILE = 102;
 
-        private static string EXTENSION_MESSAGE = "smssm";
-  
+        private static string EXTENSION_MESSAGE = "smssm";  
         public static int FRAME_DATA = 1024;
         public static int FRAME_NUMBER = 5;
         public static int FRAME_NUM_FRAMES = 5;
@@ -110,8 +109,6 @@ namespace MySerialPortKS
         {
             return this.myFrame;
         }
-
-
 
         public static void Main(String[] args)
         {
