@@ -1,8 +1,6 @@
-# Factores
-Esta herramienta fue desarrollada para el curso de Ingeniería Económica y Financiera en la Universidad Nacional de Trujillo,  para facilitar el calculo de factores de pago en el desarrollo de ejercicio. 
+Esta es una aplicación desarrollada en el curso de comunicación de datos, universidad nacional de Trujillo.
 
-![imagen de la interface de programa](./png/captura.png "Software")
+## Descripción
+La aplicación permite comunicarse a través del envío de mensajes y archivos empleando los puertos de comunicación serial. 
 
-Formulas que son calculadas por el Software
-![imagen de la interface de programa](./png/Tabla1.png "Formulas implementadas")
-![imagen de la interface de programa](./png/Tabla2.png "Formulas implementadas")
+![Interface de programa](./capturas/app.png "Formulas implementadas")
